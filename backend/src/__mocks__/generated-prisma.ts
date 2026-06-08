@@ -17,4 +17,8 @@ export const PrismaClient = jest.fn().mockImplementation(() => ({
     update: jest.fn(),
     delete: jest.fn(),
   },
+  inventoryHistory: {
+    create: jest.fn(),
+    findMany: jest.fn(),
+  },
 }));

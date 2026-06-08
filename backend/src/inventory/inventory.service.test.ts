@@ -1,12 +1,15 @@
 import { AppError } from '../middleware/error.middleware';
+import { AuditLogRepository } from '../audit-log/audit-log.repository';
 import { Product } from '../products/product.model';
 import { ProductRepository } from '../products/product.repository';
 import { InventoryService } from './inventory.service';
 
 jest.mock('../products/product.repository');
+jest.mock('../audit-log/audit-log.repository');
 
 const mockRepository = new ProductRepository() as jest.Mocked<ProductRepository>;
-const service = new InventoryService(mockRepository);
+const mockAuditLogRepository = new AuditLogRepository() as jest.Mocked<AuditLogRepository>;
+const service = new InventoryService(mockRepository, mockAuditLogRepository);
 
 const sampleProduct: Product = {
   id: 1,
@@ -19,6 +22,14 @@ const sampleProduct: Product = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  mockAuditLogRepository.create.mockResolvedValue({
+    id: 1,
+    productId: 1,
+    oldQuantity: 50,
+    newQuantity: 60,
+    action: 'increase',
+    timestamp: new Date(),
+  });
 });
 
 describe('InventoryService.increaseStock', () => {
@@ -31,6 +42,12 @@ describe('InventoryService.increaseStock', () => {
     expect(result).toEqual({ id: 1, quantity: 60 });
     expect(mockRepository.findById).toHaveBeenCalledWith(1);
     expect(mockRepository.updateQuantity).toHaveBeenCalledWith(1, 60);
+    expect(mockAuditLogRepository.create).toHaveBeenCalledWith({
+      productId: 1,
+      oldQuantity: 50,
+      newQuantity: 60,
+      action: 'increase',
+    });
   });
 
   it('should throw 404 AppError when product does not exist', async () => {
@@ -41,6 +58,7 @@ describe('InventoryService.increaseStock', () => {
       statusCode: 404,
     });
     expect(mockRepository.updateQuantity).not.toHaveBeenCalled();
+    expect(mockAuditLogRepository.create).not.toHaveBeenCalled();
   });
 });
 
@@ -54,6 +72,12 @@ describe('InventoryService.decreaseStock', () => {
     expect(result).toEqual({ id: 1, quantity: 40 });
     expect(mockRepository.findById).toHaveBeenCalledWith(1);
     expect(mockRepository.updateQuantity).toHaveBeenCalledWith(1, 40);
+    expect(mockAuditLogRepository.create).toHaveBeenCalledWith({
+      productId: 1,
+      oldQuantity: 50,
+      newQuantity: 40,
+      action: 'decrease',
+    });
   });
 
   it('should decrease stock to zero', async () => {
@@ -64,6 +88,12 @@ describe('InventoryService.decreaseStock', () => {
 
     expect(result).toEqual({ id: 1, quantity: 0 });
     expect(mockRepository.updateQuantity).toHaveBeenCalledWith(1, 0);
+    expect(mockAuditLogRepository.create).toHaveBeenCalledWith({
+      productId: 1,
+      oldQuantity: 50,
+      newQuantity: 0,
+      action: 'decrease',
+    });
   });
 
   it('should throw 400 AppError when decrease would result in negative quantity', async () => {
@@ -74,6 +104,7 @@ describe('InventoryService.decreaseStock', () => {
       statusCode: 400,
     });
     expect(mockRepository.updateQuantity).not.toHaveBeenCalled();
+    expect(mockAuditLogRepository.create).not.toHaveBeenCalled();
   });
 
   it('should throw 404 AppError when product does not exist', async () => {
@@ -84,5 +115,6 @@ describe('InventoryService.decreaseStock', () => {
       statusCode: 404,
     });
     expect(mockRepository.updateQuantity).not.toHaveBeenCalled();
+    expect(mockAuditLogRepository.create).not.toHaveBeenCalled();
   });
 });
