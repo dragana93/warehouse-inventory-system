@@ -8,10 +8,14 @@ module.exports = {
   transform: {
     ...tsJestTransformCfg,
   },
+  moduleNameMapper: {
+    "^generated/prisma$": "<rootDir>/src/__mocks__/generated-prisma.ts",
+  },
   collectCoverageFrom: [
     "src/**/*.ts",
     "!src/**/*.d.ts",
     "!src/server.ts",
+    "!src/__mocks__/**",
   ],
   coverageDirectory: "coverage",
   coverageThreshold: {

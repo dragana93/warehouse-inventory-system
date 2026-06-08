@@ -11,7 +11,11 @@
     "exactOptionalPropertyTypes": true,
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "generated/prisma": ["./generated/prisma"]
+    }
   },
   "include": ["src"]
 }
