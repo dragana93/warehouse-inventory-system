@@ -1,0 +1,97 @@
+<div class="product-list">
+  <div class="list-header">
+    <h1>Products</h1>
+    <a mat-raised-button color="primary" routerLink="/products/new">
+      <mat-icon>add</mat-icon>
+      Add Product
+    </a>
+  </div>
+
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event); pageIndex.set(0)"
+        placeholder="Name or code"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select
+        [ngModel]="categoryFilter()"
+        (ngModelChange)="categoryFilter.set($event); pageIndex.set(0)"
+      >
+        <mat-option value="">All</mat-option>
+        @for (cat of categoryNames(); track cat) {
+          <mat-option [value]="cat">{{ cat }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">
+      <mat-progress-spinner mode="indeterminate" diameter="48" />
+    </div>
+  } @else {
+    <table mat-table [dataSource]="pagedProducts()" matSort (matSortChange)="onSort($event)">
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+        <td mat-cell *matCellDef="let p">{{ p.code }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let p">{{ p.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let p">{{ p.category.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <td mat-cell *matCellDef="let p">{{ p.price | currency }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
+        <td mat-cell *matCellDef="let p">{{ p.quantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let p" class="actions-cell">
+          <a mat-icon-button [routerLink]="['/products', p.id]" aria-label="View product">
+            <mat-icon>visibility</mat-icon>
+          </a>
+          <a mat-icon-button [routerLink]="['/products/edit', p.id]" aria-label="Edit product">
+            <mat-icon>edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" [attr.colspan]="columns.length">
+          No products found.
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      [length]="filteredProducts().length"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
+      [pageSizeOptions]="[10, 25, 50]"
+      (page)="onPage($event)"
+    />
+  }
+</div>
