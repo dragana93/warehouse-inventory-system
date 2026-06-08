@@ -3,6 +3,7 @@ import cors from "cors";
 import { requestLogger } from "./middleware/request.logger.middleware";
 import { errorMiddleware } from "./middleware/error.middleware";
 import categoryRoutes from "./categories/category.routes";
+import productRoutes from "./products/product.routes";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use("/categories", categoryRoutes);
+app.use("/products", productRoutes);
 
 app.use(errorMiddleware);
 
