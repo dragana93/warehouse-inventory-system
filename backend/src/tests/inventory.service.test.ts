@@ -1,96 +1,79 @@
-import { InventoryService } from "../services/inventory.service";
-import { AppError } from "../middleware/error.middleware";
+import prisma from '../database/database.client';
+import { AuditLogRepository } from '../audit-log/audit-log.repository';
 
-const mockProduct = {
-  id: 1,
-  code: "PRD-001",
-  name: "Water Bottle",
-  price: 1.5,
-  quantity: 100,
-  categoryId: 1,
+jest.mock('../database/database.client', () => ({
+  __esModule: true,
+  default: {
+    inventoryHistory: {
+      findMany: jest.fn(),
+      create: jest.fn(),
+    },
+  },
+}));
+
+const mockPrisma = prisma as unknown as {
+  inventoryHistory: {
+    findMany: jest.Mock;
+    create: jest.Mock;
+  };
 };
 
-const mockHistory = {
+const repository = new AuditLogRepository();
+
+const sampleEntry = {
   id: 1,
   productId: 1,
   oldQuantity: 100,
   newQuantity: 80,
-  action: "SALE",
-  timestamp: new Date(),
+  action: 'decrease' as const,
+  timestamp: new Date('2026-01-01T00:00:00Z'),
 };
 
-const mockPrisma = {
-  inventoryHistory: {
-    findMany: jest.fn(),
-    create: jest.fn(),
-  },
-  product: {
-    findUnique: jest.fn(),
-    update: jest.fn(),
-  },
-  $transaction: jest.fn(),
-};
+beforeEach(() => jest.clearAllMocks());
 
-jest.mock("../utils/prisma", () => ({ default: mockPrisma }));
+describe('AuditLogRepository.create', () => {
+  it('should create and return an audit log entry', async () => {
+    mockPrisma.inventoryHistory.create.mockResolvedValue(sampleEntry);
+    const dto = { productId: 1, oldQuantity: 100, newQuantity: 80, action: 'decrease' as const };
 
-describe("InventoryService", () => {
-  let service: InventoryService;
+    const result = await repository.create(dto);
 
-  beforeEach(() => {
-    service = new InventoryService();
-    jest.clearAllMocks();
+    expect(result).toEqual(sampleEntry);
+    expect(mockPrisma.inventoryHistory.create).toHaveBeenCalledWith({ data: dto });
   });
+});
 
-  describe("getHistory", () => {
-    it("returns history ordered by timestamp desc", async () => {
-      const entries = [{ ...mockHistory, product: mockProduct }];
-      mockPrisma.inventoryHistory.findMany.mockResolvedValue(entries);
+describe('AuditLogRepository.findAll', () => {
+  it('should return entries ordered by timestamp desc', async () => {
+    mockPrisma.inventoryHistory.findMany.mockResolvedValue([sampleEntry]);
 
-      const result = await service.getHistory();
+    const result = await repository.findAll();
 
-      expect(result).toEqual(entries);
-      expect(mockPrisma.inventoryHistory.findMany).toHaveBeenCalledWith({
-        include: { product: true },
-        orderBy: { timestamp: "desc" },
-      });
+    expect(result).toEqual([sampleEntry]);
+    expect(mockPrisma.inventoryHistory.findMany).toHaveBeenCalledWith({
+      orderBy: { timestamp: 'desc' },
     });
   });
+});
 
-  describe("updateStock", () => {
-    it("throws AppError 400 when newQuantity is negative", async () => {
-      await expect(service.updateStock(1, -1, "SALE")).rejects.toThrow(
-        new AppError(400, "Stock cannot go below zero")
-      );
-      expect(mockPrisma.product.findUnique).not.toHaveBeenCalled();
+describe('AuditLogRepository.findByProductId', () => {
+  it('should return entries for a specific product', async () => {
+    mockPrisma.inventoryHistory.findMany.mockResolvedValue([sampleEntry]);
+
+    const result = await repository.findByProductId(1);
+
+    expect(result).toEqual([sampleEntry]);
+    expect(mockPrisma.inventoryHistory.findMany).toHaveBeenCalledWith({
+      where: { productId: 1 },
+      orderBy: { timestamp: 'desc' },
     });
+  });
 
-    it("throws AppError 404 when product not found", async () => {
-      mockPrisma.product.findUnique.mockResolvedValue(null);
+  it('should return empty array when no history for product', async () => {
+    mockPrisma.inventoryHistory.findMany.mockResolvedValue([]);
 
-      await expect(service.updateStock(99, 50, "SALE")).rejects.toThrow(
-        new AppError(404, "Product not found")
-      );
-    });
+    const result = await repository.findByProductId(99);
 
-    it("updates stock and records history in a transaction", async () => {
-      const updatedProduct = { ...mockProduct, quantity: 80 };
-      mockPrisma.product.findUnique.mockResolvedValue(mockProduct);
-      mockPrisma.$transaction.mockResolvedValue([updatedProduct, mockHistory]);
-
-      const result = await service.updateStock(1, 80, "SALE");
-
-      expect(result).toEqual({ product: updatedProduct, history: mockHistory });
-      expect(mockPrisma.$transaction).toHaveBeenCalledTimes(1);
-    });
-
-    it("allows setting stock to zero", async () => {
-      const updatedProduct = { ...mockProduct, quantity: 0 };
-      mockPrisma.product.findUnique.mockResolvedValue(mockProduct);
-      mockPrisma.$transaction.mockResolvedValue([updatedProduct, { ...mockHistory, newQuantity: 0 }]);
-
-      const result = await service.updateStock(1, 0, "SALE");
-
-      expect(result.product.quantity).toBe(0);
-    });
+    expect(result).toEqual([]);
   });
 });

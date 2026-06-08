@@ -2,6 +2,7 @@ import prisma from '../database/database.client';
 import { AuditLogRepository } from './audit-log.repository';
 
 jest.mock('../database/database.client', () => ({
+  __esModule: true,
   default: {
     inventoryHistory: {
       create: jest.fn(),

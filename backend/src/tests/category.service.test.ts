@@ -1,93 +1,96 @@
-import { CategoryService } from "../services/category.service";
+import prisma from '../database/database.client';
+import { CategoryRepository } from '../categories/category.repository';
 
-const mockPrisma = {
-  category: {
-    findMany: jest.fn(),
-    findUnique: jest.fn(),
-    create: jest.fn(),
-    update: jest.fn(),
-    delete: jest.fn(),
+jest.mock('../database/database.client', () => ({
+  __esModule: true,
+  default: {
+    category: {
+      findMany: jest.fn(),
+      findUnique: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
+      delete: jest.fn(),
+    },
   },
+}));
+
+const mockPrisma = prisma as unknown as {
+  category: {
+    findMany: jest.Mock;
+    findUnique: jest.Mock;
+    create: jest.Mock;
+    update: jest.Mock;
+    delete: jest.Mock;
+  };
 };
 
-jest.mock("../utils/prisma", () => ({ default: mockPrisma }));
+const repository = new CategoryRepository();
+const sampleCategory = { id: 1, name: 'Beverages' };
 
-describe("CategoryService", () => {
-  let service: CategoryService;
+beforeEach(() => jest.clearAllMocks());
 
-  beforeEach(() => {
-    service = new CategoryService();
-    jest.clearAllMocks();
+describe('CategoryRepository.findAll', () => {
+  it('should return all categories', async () => {
+    mockPrisma.category.findMany.mockResolvedValue([sampleCategory]);
+
+    const result = await repository.findAll();
+
+    expect(result).toEqual([sampleCategory]);
+    expect(mockPrisma.category.findMany).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('CategoryRepository.findById', () => {
+  it('should return a category by id', async () => {
+    mockPrisma.category.findUnique.mockResolvedValue(sampleCategory);
+
+    const result = await repository.findById(1);
+
+    expect(result).toEqual(sampleCategory);
+    expect(mockPrisma.category.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
   });
 
-  describe("getAll", () => {
-    it("returns all categories", async () => {
-      const categories = [{ id: 1, name: "Beverages" }];
-      mockPrisma.category.findMany.mockResolvedValue(categories);
+  it('should return null when not found', async () => {
+    mockPrisma.category.findUnique.mockResolvedValue(null);
 
-      const result = await service.getAll();
+    const result = await repository.findById(99);
 
-      expect(result).toEqual(categories);
-      expect(mockPrisma.category.findMany).toHaveBeenCalledTimes(1);
+    expect(result).toBeNull();
+  });
+});
+
+describe('CategoryRepository.create', () => {
+  it('should create and return a category', async () => {
+    mockPrisma.category.create.mockResolvedValue(sampleCategory);
+
+    const result = await repository.create({ name: 'Beverages' });
+
+    expect(result).toEqual(sampleCategory);
+    expect(mockPrisma.category.create).toHaveBeenCalledWith({ data: { name: 'Beverages' } });
+  });
+});
+
+describe('CategoryRepository.update', () => {
+  it('should update and return the category', async () => {
+    const updated = { id: 1, name: 'Updated' };
+    mockPrisma.category.update.mockResolvedValue(updated);
+
+    const result = await repository.update(1, { name: 'Updated' });
+
+    expect(result).toEqual(updated);
+    expect(mockPrisma.category.update).toHaveBeenCalledWith({
+      where: { id: 1 },
+      data: { name: 'Updated' },
     });
   });
+});
 
-  describe("getById", () => {
-    it("returns a category by id", async () => {
-      const category = { id: 1, name: "Beverages" };
-      mockPrisma.category.findUnique.mockResolvedValue(category);
+describe('CategoryRepository.delete', () => {
+  it('should delete the category', async () => {
+    mockPrisma.category.delete.mockResolvedValue(sampleCategory);
 
-      const result = await service.getById(1);
+    await repository.delete(1);
 
-      expect(result).toEqual(category);
-      expect(mockPrisma.category.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
-    });
-
-    it("returns null when category not found", async () => {
-      mockPrisma.category.findUnique.mockResolvedValue(null);
-
-      const result = await service.getById(99);
-
-      expect(result).toBeNull();
-    });
-  });
-
-  describe("create", () => {
-    it("creates and returns a new category", async () => {
-      const created = { id: 2, name: "Snacks" };
-      mockPrisma.category.create.mockResolvedValue(created);
-
-      const result = await service.create({ name: "Snacks" });
-
-      expect(result).toEqual(created);
-      expect(mockPrisma.category.create).toHaveBeenCalledWith({ data: { name: "Snacks" } });
-    });
-  });
-
-  describe("update", () => {
-    it("updates and returns the category", async () => {
-      const updated = { id: 1, name: "Beverages Updated" };
-      mockPrisma.category.update.mockResolvedValue(updated);
-
-      const result = await service.update(1, { name: "Beverages Updated" });
-
-      expect(result).toEqual(updated);
-      expect(mockPrisma.category.update).toHaveBeenCalledWith({
-        where: { id: 1 },
-        data: { name: "Beverages Updated" },
-      });
-    });
-  });
-
-  describe("delete", () => {
-    it("deletes the category and returns it", async () => {
-      const deleted = { id: 1, name: "Beverages" };
-      mockPrisma.category.delete.mockResolvedValue(deleted);
-
-      const result = await service.delete(1);
-
-      expect(result).toEqual(deleted);
-      expect(mockPrisma.category.delete).toHaveBeenCalledWith({ where: { id: 1 } });
-    });
+    expect(mockPrisma.category.delete).toHaveBeenCalledWith({ where: { id: 1 } });
   });
 });
