@@ -18,6 +18,10 @@ export class ProductRepository {
     return prisma.product.update({ where: { id }, data: dto });
   }
 
+  async updateQuantity(id: number, quantity: number): Promise<Product> {
+    return prisma.product.update({ where: { id }, data: { quantity } });
+  }
+
   async delete(id: number): Promise<void> {
     await prisma.product.delete({ where: { id } });
   }
