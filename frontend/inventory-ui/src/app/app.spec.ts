@@ -24,7 +24,8 @@ describe('App', () => {
     expect(compiled.querySelector('router-outlet')).not.toBeNull();
   });
 
-  it('should have an empty routes configuration for initial setup', () => {
-    expect(routes).toEqual([]);
+  it('should configure the layout as the root route', () => {
+    expect(routes[0].path).toBe('');
+    expect(routes[0].component).toBeDefined();
   });
 });

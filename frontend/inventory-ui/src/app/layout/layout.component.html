@@ -1,0 +1,40 @@
+<mat-sidenav-container class="app-container">
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile() ? 'over' : 'side'"
+    [opened]="!isMobile()"
+    class="app-sidenav"
+  >
+    <mat-nav-list>
+      @for (item of navItems; track item.path) {
+        <a
+          mat-list-item
+          [routerLink]="item.path"
+          routerLinkActive="active-link"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isMobile()) {
+        <button
+          mat-icon-button
+          (click)="sidenav.toggle()"
+          aria-label="Toggle navigation"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      <span>Warehouse Inventory System</span>
+    </mat-toolbar>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
