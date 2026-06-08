@@ -1,0 +1,47 @@
+.product-detail {
+  padding: 24px;
+  max-width: 600px;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
+
+.error {
+  color: var(--mat-sys-error);
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px 16px;
+  margin: 0;
+
+  dt {
+    font-weight: 500;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+}

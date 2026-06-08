@@ -1,0 +1,45 @@
+<div class="product-detail">
+  <div class="detail-header">
+    <button mat-icon-button routerLink="/products" aria-label="Back to products">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Product Details</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">
+      <mat-spinner diameter="48" />
+    </div>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (product(); as p) {
+    <mat-card>
+      <mat-card-content>
+        <dl class="detail-list">
+          <dt>Code</dt>
+          <dd>{{ p.code }}</dd>
+
+          <dt>Name</dt>
+          <dd>{{ p.name }}</dd>
+
+          <dt>Price</dt>
+          <dd>{{ p.price | currency }}</dd>
+
+          <dt>Quantity</dt>
+          <dd>{{ p.quantity }}</dd>
+
+          <dt>Category</dt>
+          <dd>{{ p.category.name }}</dd>
+        </dl>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <a mat-raised-button color="primary" [routerLink]="['/products/edit', p.id]">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </a>
+        <a mat-button routerLink="/products">Back to list</a>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
