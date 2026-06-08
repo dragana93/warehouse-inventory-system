@@ -1,5 +1,5 @@
 import { AppError } from '../middleware/error.middleware';
-import { Category, CreateCategoryDto, UpdateCategoryDto } from './category.model';
+import { Category, CategorySummary, CreateCategoryDto, UpdateCategoryDto } from './category.model';
 import { CategoryRepository } from './category.repository';
 
 export class CategoryService {
@@ -7,6 +7,10 @@ export class CategoryService {
 
   async getAll(): Promise<Category[]> {
     return this.repository.findAll();
+  }
+
+  async getSummary(): Promise<CategorySummary[]> {
+    return this.repository.getSummary();
   }
 
   async create(dto: CreateCategoryDto): Promise<Category> {

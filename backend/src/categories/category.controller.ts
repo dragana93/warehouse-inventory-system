@@ -13,6 +13,15 @@ export class CategoryController {
     }
   };
 
+  getSummary = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const summary = await this.service.getSummary();
+      res.json(summary);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const category = await this.service.create(req.body as { name: string });

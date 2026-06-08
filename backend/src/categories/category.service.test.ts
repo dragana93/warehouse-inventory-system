@@ -1,5 +1,5 @@
 import { AppError } from '../middleware/error.middleware';
-import { Category } from './category.model';
+import { Category, CategorySummary } from './category.model';
 import { CategoryRepository } from './category.repository';
 import { CategoryService } from './category.service';
 
@@ -12,6 +12,26 @@ const sampleCategory: Category = { id: 1, name: 'Electronics' };
 
 beforeEach(() => {
   jest.clearAllMocks();
+});
+
+describe('CategoryService.getSummary', () => {
+  it('should return summary from repository', async () => {
+    const summary: CategorySummary[] = [{ id: 1, name: 'Electronics', productCount: 5 }];
+    mockRepository.getSummary.mockResolvedValue(summary);
+
+    const result = await service.getSummary();
+
+    expect(result).toEqual(summary);
+    expect(mockRepository.getSummary).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return empty array when no categories exist', async () => {
+    mockRepository.getSummary.mockResolvedValue([]);
+
+    const result = await service.getSummary();
+
+    expect(result).toEqual([]);
+  });
 });
 
 describe('CategoryService.getAll', () => {

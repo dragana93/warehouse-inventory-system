@@ -1,5 +1,5 @@
 import prisma from '../database/database.client';
-import { Category, CreateCategoryDto, UpdateCategoryDto } from './category.model';
+import { Category, CategorySummary, CreateCategoryDto, UpdateCategoryDto } from './category.model';
 
 export class CategoryRepository {
   async findAll(): Promise<Category[]> {
@@ -8,6 +8,17 @@ export class CategoryRepository {
 
   async findById(id: number): Promise<Category | null> {
     return prisma.category.findUnique({ where: { id } });
+  }
+
+  async getSummary(): Promise<CategorySummary[]> {
+    const rows = await prisma.category.findMany({
+      include: { _count: { select: { products: true } } },
+    });
+    return rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      productCount: row._count.products,
+    }));
   }
 
   async create(dto: CreateCategoryDto): Promise<Category> {
