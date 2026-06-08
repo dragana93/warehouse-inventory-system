@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./inventory.db"
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  code        String   @unique
+  name        String
+  price       Float
+  quantity    Int
+  categoryId  Int
+
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  history     InventoryHistory[]
+}
+
+model InventoryHistory {
+  id           Int      @id @default(autoincrement())
+  productId    Int
+
+  oldQuantity  Int
+  newQuantity  Int
+
+  action       String
+
+  timestamp    DateTime @default(now())
+
+  product       Product @relation(fields: [productId], references: [id])
+}
