@@ -1,25 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductFormComponent, ProductFormValue } from '../product-form/product-form.component';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-new',
-  standalone: true,
   imports: [ProductFormComponent],
   template: `
     <app-product-form
       title="New Product"
       (submitted)="onCreate($event)"
       (cancelled)="onCancel()"
-    ></app-product-form>
+    />
   `,
 })
 export class ProductNewComponent {
-  constructor(private readonly router: Router) {}
+  private readonly router = inject(Router);
+  private readonly productService = inject(ProductService);
 
   onCreate(value: ProductFormValue): void {
-    // TODO: call ProductService.create(value)
-    void this.router.navigate(['/products']);
+    this.productService.create(value).subscribe(() => {
+      void this.router.navigate(['/products']);
+    });
   }
 
   onCancel(): void {

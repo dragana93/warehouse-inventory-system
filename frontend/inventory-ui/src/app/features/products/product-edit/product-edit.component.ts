@@ -1,10 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductFormComponent, ProductFormValue } from '../product-form/product-form.component';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-edit',
-  standalone: true,
   imports: [ProductFormComponent],
   template: `
     @if (initial()) {
@@ -13,27 +13,36 @@ import { ProductFormComponent, ProductFormValue } from '../product-form/product-
         [initial]="initial()!"
         (submitted)="onUpdate($event)"
         (cancelled)="onCancel()"
-      ></app-product-form>
+      />
     }
   `,
 })
 export class ProductEditComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly productService = inject(ProductService);
+
   readonly initial = signal<ProductFormValue | null>(null);
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-  ) {}
+  private productId = 0;
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    // TODO: load product by id from ProductService and set initial()
-    void id;
+    this.productId = Number(this.route.snapshot.paramMap.get('id'));
+    this.productService.getById(this.productId).subscribe((product) => {
+      this.initial.set({
+        code: product.code,
+        name: product.name,
+        price: product.price,
+        categoryId: product.categoryId,
+        quantity: product.quantity,
+      });
+    });
   }
 
   onUpdate(value: ProductFormValue): void {
-    // TODO: call ProductService.update(id, value)
-    void this.router.navigate(['/products']);
+    this.productService.update(this.productId, value).subscribe(() => {
+      void this.router.navigate(['/products']);
+    });
   }
 
   onCancel(): void {
