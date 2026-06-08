@@ -1,92 +1,234 @@
 # Tasks
 
-## Task 1
+## Backend
 
-Setup backend
+### BE-01 Setup Backend
 
-Acceptance Criteria:
+Acceptance Criteria
 
-- Express running
-- SQLite connected
-- Prisma configured
-
----
-
-## Task 2
-
-Create Category Entity
-
-Acceptance Criteria:
-
-- Create category
-- Update category
-- Delete category
-- Get categories
+* Express running
+* SQLite connected
+* Prisma configured
+* TypeScript configured
 
 ---
 
-## Task 3
+### BE-02 Category CRUD API
 
-Create Product Entity
+Acceptance Criteria
 
-Acceptance Criteria:
+* Create category
+* Update category
+* Delete category
+* Get categories
 
-- Product has:
-  - id
-  - code
-  - name
-  - price
-  - quantity
-  - categoryId
+Endpoints
 
----
+POST /categories
 
-## Task 4
+GET /categories
 
-Inventory Updates
+PUT /categories/:id
 
-Acceptance Criteria:
-
-- Increase stock
-- Decrease stock
-- Prevent negative quantity
+DELETE /categories/:id
 
 ---
 
-## Task 5
+### BE-03 Product CRUD API
 
-Inventory Audit Log
+Acceptance Criteria
 
-Acceptance Criteria:
-
-- Every stock update stored
-
-Fields:
-
-- oldQuantity
-- newQuantity
-- timestamp
-- action
+* Create product
+* Update product
+* Delete product
+* Get products
+* Get product details
 
 ---
 
-## Task 6
+### BE-04 Inventory Update API
 
-Category Summary
+Acceptance Criteria
 
-Acceptance Criteria:
-
-- Total products per category
+* Increase stock
+* Decrease stock
+* Prevent negative stock
 
 ---
 
-## Task 7
+### BE-05 Inventory History API
 
-Sorting and Filtering
+Acceptance Criteria
 
-Acceptance Criteria:
+* Store inventory changes
+* Return inventory history
 
-- Filter by category
-- Filter by code
-- Sort by name
-- Sort by quantity
+---
+
+### BE-06 Reports API
+
+Acceptance Criteria
+
+* Return stock totals per category
+
+---
+
+### BE-07 Filtering and Sorting
+
+Acceptance Criteria
+
+* Filter by category
+* Filter by code
+* Sort by name
+* Sort by quantity
+
+---
+
+### BE-08 Error Handling
+
+Acceptance Criteria
+
+* Global error middleware
+* Winston logging
+
+---
+
+### BE-09 Backend Tests
+
+Acceptance Criteria
+
+* 70%+ coverage
+
+=================================================
+
+## Frontend
+
+### FE-01 Setup Angular
+
+Acceptance Criteria
+
+* Angular created
+* Routing configured
+* Angular Material configured
+
+---
+
+### FE-02 Application Layout
+
+Acceptance Criteria
+
+* Toolbar
+* Navigation menu
+* Responsive layout
+
+---
+
+### FE-03 Category Management Screen
+
+Acceptance Criteria
+
+* Category list
+* Add category dialog
+* Edit category dialog
+* Delete category confirmation
+
+---
+
+### FE-04 Product List Screen
+
+Acceptance Criteria
+
+Display
+
+* Code
+* Name
+* Price
+* Quantity
+* Category
+
+Features
+
+* Pagination
+* Search
+* Sorting
+* Filtering
+
+---
+
+### FE-05 Product Details Screen
+
+Acceptance Criteria
+
+Display
+
+* Product code
+* Product name
+* Price
+* Quantity
+* Category
+
+---
+
+### FE-06 Product Form
+
+Acceptance Criteria
+
+Create product
+
+Edit product
+
+Validation
+
+* Required fields
+* Price > 0
+* Quantity >= 0
+
+---
+
+### FE-07 Inventory Update Screen
+
+Acceptance Criteria
+
+* Increase stock
+* Decrease stock
+* Display validation errors
+
+---
+
+### FE-08 Inventory History Screen
+
+Acceptance Criteria
+
+Display
+
+* Date
+* Product
+* Old quantity
+* New quantity
+* Action
+
+---
+
+### FE-09 Reports Screen
+
+Acceptance Criteria
+
+Display stock totals per category
+
+Example
+
+Beverages: 120
+
+Snacks: 80
+
+Household: 50
+
+---
+
+### FE-10 Frontend Tests
+
+Acceptance Criteria
+
+* Service tests
+* Component tests
+* 70%+ coverage
