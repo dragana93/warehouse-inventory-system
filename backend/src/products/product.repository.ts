@@ -1,9 +1,16 @@
 import prisma from '../database/database.client';
-import { CreateProductDto, Product, UpdateProductDto } from './product.model';
+import { CreateProductDto, Product, ProductQuery, UpdateProductDto } from './product.model';
 
 export class ProductRepository {
-  async findAll(): Promise<Product[]> {
-    return prisma.product.findMany();
+  async findAll(query: ProductQuery = {}): Promise<Product[]> {
+    const where: { categoryId?: number; code?: string } = {};
+    if (query.categoryId !== undefined) where.categoryId = query.categoryId;
+    if (query.code !== undefined) where.code = query.code;
+
+    const orderBy: { name?: 'asc' | 'desc'; quantity?: 'asc' | 'desc' } = {};
+    if (query.sortBy) orderBy[query.sortBy] = query.sortOrder ?? 'asc';
+
+    return prisma.product.findMany({ where, orderBy });
   }
 
   async findById(id: number): Promise<Product | null> {

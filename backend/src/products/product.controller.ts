@@ -1,13 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateProductDto, UpdateProductDto } from './product.model';
+import { CreateProductDto, ProductQuery, SortField, SortOrder, UpdateProductDto } from './product.model';
 import { ProductService } from './product.service';
 
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
-  getAll = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+  getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const products = await this.service.getAll();
+      const query: ProductQuery = {};
+      if (req.query['categoryId']) query.categoryId = Number(req.query['categoryId']);
+      if (req.query['code']) query.code = String(req.query['code']);
+      if (req.query['sortBy']) query.sortBy = String(req.query['sortBy']) as SortField;
+      if (req.query['sortOrder']) query.sortOrder = String(req.query['sortOrder']) as SortOrder;
+      const products = await this.service.getAll(query);
       res.json(products);
     } catch (error) {
       next(error);

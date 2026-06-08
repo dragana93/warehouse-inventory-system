@@ -1,5 +1,5 @@
 import { AppError } from '../middleware/error.middleware';
-import { Product } from './product.model';
+import { Product, ProductQuery } from './product.model';
 import { ProductRepository } from './product.repository';
 import { ProductService } from './product.service';
 
@@ -22,13 +22,13 @@ beforeEach(() => {
 });
 
 describe('ProductService.getAll', () => {
-  it('should return all products', async () => {
+  it('should return all products with no query', async () => {
     mockRepository.findAll.mockResolvedValue([sampleProduct]);
 
     const result = await service.getAll();
 
     expect(result).toEqual([sampleProduct]);
-    expect(mockRepository.findAll).toHaveBeenCalledTimes(1);
+    expect(mockRepository.findAll).toHaveBeenCalledWith({});
   });
 
   it('should return an empty array when no products exist', async () => {
@@ -37,6 +37,42 @@ describe('ProductService.getAll', () => {
     const result = await service.getAll();
 
     expect(result).toEqual([]);
+  });
+
+  it('should pass categoryId filter to repository', async () => {
+    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const query: ProductQuery = { categoryId: 1 };
+
+    await service.getAll(query);
+
+    expect(mockRepository.findAll).toHaveBeenCalledWith(query);
+  });
+
+  it('should pass code filter to repository', async () => {
+    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const query: ProductQuery = { code: 'PROD-001' };
+
+    await service.getAll(query);
+
+    expect(mockRepository.findAll).toHaveBeenCalledWith(query);
+  });
+
+  it('should pass sortBy name to repository', async () => {
+    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const query: ProductQuery = { sortBy: 'name', sortOrder: 'asc' };
+
+    await service.getAll(query);
+
+    expect(mockRepository.findAll).toHaveBeenCalledWith(query);
+  });
+
+  it('should pass sortBy quantity to repository', async () => {
+    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const query: ProductQuery = { sortBy: 'quantity', sortOrder: 'desc' };
+
+    await service.getAll(query);
+
+    expect(mockRepository.findAll).toHaveBeenCalledWith(query);
   });
 });
 

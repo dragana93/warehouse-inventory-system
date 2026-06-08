@@ -7,6 +7,16 @@ export interface Product {
   categoryId: number;
 }
 
+export type SortField = 'name' | 'quantity';
+export type SortOrder = 'asc' | 'desc';
+
+export interface ProductQuery {
+  categoryId?: number;
+  code?: string;
+  sortBy?: SortField;
+  sortOrder?: SortOrder;
+}
+
 export interface CreateProductDto {
   code: string;
   name: string;
