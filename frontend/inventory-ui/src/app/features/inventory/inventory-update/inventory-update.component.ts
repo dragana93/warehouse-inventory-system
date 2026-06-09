@@ -78,7 +78,6 @@ export class InventoryUpdateComponent implements OnInit {
     }
 
     const { productId, action, quantity } = this.form.value;
-    const payload = { productId: productId!, quantity: quantity! };
 
     // Client-side: prevent decrease below 0
     const current = this.selectedProduct()?.quantity ?? 0;
@@ -87,14 +86,15 @@ export class InventoryUpdateComponent implements OnInit {
       return;
     }
 
+    const previousQuantity = current;
     this.loading.set(true);
     const operation$ = action === 'increase'
-      ? this.inventoryService.increase(payload)
-      : this.inventoryService.decrease(payload);
+      ? this.inventoryService.increase(productId!, quantity!)
+      : this.inventoryService.decrease(productId!, quantity!);
 
     operation$.subscribe({
       next: (res) => {
-        this.result.set(res);
+        this.result.set({ productId: res.id, previousQuantity, newQuantity: res.quantity });
         this.loading.set(false);
         this.form.reset({ action: 'increase' });
       },

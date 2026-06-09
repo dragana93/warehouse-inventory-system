@@ -1,7 +1,7 @@
 export type InventoryAction = 'increase' | 'decrease';
 
-export interface InventoryUpdatePayload {
-  productId: number;
+export interface StockUpdateResult {
+  id: number;
   quantity: number;
 }
 

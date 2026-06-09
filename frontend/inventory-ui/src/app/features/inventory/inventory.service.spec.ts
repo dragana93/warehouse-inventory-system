@@ -2,14 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { InventoryService } from './inventory.service';
-import { InventoryHistoryEntry, InventoryUpdatePayload, InventoryUpdateResult } from '../../models/inventory.model';
+import { InventoryHistoryEntry, StockUpdateResult } from '../../models/inventory.model';
 
 const BASE_URL = 'http://localhost:3000/inventory';
 
-const mockResult: InventoryUpdateResult = {
-  productId: 1,
-  previousQuantity: 50,
-  newQuantity: 60,
+const mockStockResult: StockUpdateResult = {
+  id: 1,
+  quantity: 60,
 };
 
 describe('InventoryService', () => {
@@ -31,28 +30,25 @@ describe('InventoryService', () => {
   });
 
   describe('increase', () => {
-    it('should POST to /inventory/increase with payload', () => {
-      const payload: InventoryUpdatePayload = { productId: 1, quantity: 10 };
+    it('should POST to /inventory/:productId/increase with amount in body', () => {
+      service.increase(1, 10).subscribe((result) => expect(result).toEqual(mockStockResult));
 
-      service.increase(payload).subscribe((result) => expect(result).toEqual(mockResult));
-
-      const req = httpMock.expectOne(`${BASE_URL}/increase`);
+      const req = httpMock.expectOne(`${BASE_URL}/1/increase`);
       expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual(payload);
-      req.flush(mockResult);
+      expect(req.request.body).toEqual({ amount: 10 });
+      req.flush(mockStockResult);
     });
   });
 
   describe('decrease', () => {
-    it('should POST to /inventory/decrease with payload', () => {
-      const payload: InventoryUpdatePayload = { productId: 1, quantity: 5 };
-      const decreaseResult: InventoryUpdateResult = { ...mockResult, newQuantity: 45 };
+    it('should POST to /inventory/:productId/decrease with amount in body', () => {
+      const decreaseResult: StockUpdateResult = { id: 1, quantity: 45 };
 
-      service.decrease(payload).subscribe((result) => expect(result).toEqual(decreaseResult));
+      service.decrease(1, 5).subscribe((result) => expect(result).toEqual(decreaseResult));
 
-      const req = httpMock.expectOne(`${BASE_URL}/decrease`);
+      const req = httpMock.expectOne(`${BASE_URL}/1/decrease`);
       expect(req.request.method).toBe('POST');
-      expect(req.request.body).toEqual(payload);
+      expect(req.request.body).toEqual({ amount: 5 });
       req.flush(decreaseResult);
     });
   });

@@ -5,7 +5,7 @@ import { InventoryUpdateComponent } from './inventory-update.component';
 import { InventoryService } from '../inventory.service';
 import { ProductService } from '../../products/product.service';
 import { Product } from '../../../models/product.model';
-import { InventoryUpdateResult } from '../../../models/inventory.model';
+import { StockUpdateResult } from '../../../models/inventory.model';
 
 const mockProducts: Product[] = [
   {
@@ -18,17 +18,13 @@ const mockProducts: Product[] = [
   },
 ];
 
-const mockResult: InventoryUpdateResult = {
-  productId: 1,
-  previousQuantity: 50,
-  newQuantity: 60,
-};
+const mockStockResult: StockUpdateResult = { id: 1, quantity: 60 };
 
 async function setup() {
   const mockProductService = { getAll: vi.fn().mockReturnValue(of(mockProducts)) };
   const mockInventoryService = {
-    increase: vi.fn().mockReturnValue(of(mockResult)),
-    decrease: vi.fn().mockReturnValue(of({ ...mockResult, newQuantity: 45 })),
+    increase: vi.fn().mockReturnValue(of(mockStockResult)),
+    decrease: vi.fn().mockReturnValue(of({ id: 1, quantity: 45 })),
   };
 
   await TestBed.configureTestingModule({
@@ -136,7 +132,7 @@ describe('InventoryUpdateComponent', () => {
       component.form.controls.action.setValue('decrease');
       component.form.controls.quantity.setValue(10);
       component.submit();
-      expect(mockInventoryService.decrease).toHaveBeenCalledWith({ productId: 1, quantity: 10 });
+      expect(mockInventoryService.decrease).toHaveBeenCalledWith(1, 10);
     });
   });
 
@@ -147,7 +143,7 @@ describe('InventoryUpdateComponent', () => {
       component.form.controls.action.setValue('increase');
       component.form.controls.quantity.setValue(10);
       component.submit();
-      expect(mockInventoryService.increase).toHaveBeenCalledWith({ productId: 1, quantity: 10 });
+      expect(mockInventoryService.increase).toHaveBeenCalledWith(1, 10);
     });
 
     it('should set result signal on success', async () => {
@@ -156,7 +152,7 @@ describe('InventoryUpdateComponent', () => {
       component.form.controls.action.setValue('increase');
       component.form.controls.quantity.setValue(10);
       component.submit();
-      expect(component.result()).toEqual(mockResult);
+      expect(component.result()).toEqual({ productId: 1, previousQuantity: 50, newQuantity: 60 });
     });
 
     it('should reset the form after successful increase', async () => {
@@ -177,7 +173,7 @@ describe('InventoryUpdateComponent', () => {
       component.form.controls.action.setValue('decrease');
       component.form.controls.quantity.setValue(5);
       component.submit();
-      expect(mockInventoryService.decrease).toHaveBeenCalledWith({ productId: 1, quantity: 5 });
+      expect(mockInventoryService.decrease).toHaveBeenCalledWith(1, 5);
     });
   });
 
