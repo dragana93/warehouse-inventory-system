@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { InventoryUpdatePayload, InventoryUpdateResult } from '../../models/inventory.model';
+import { InventoryHistoryEntry, InventoryUpdatePayload, InventoryUpdateResult } from '../../models/inventory.model';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
@@ -14,5 +14,9 @@ export class InventoryService {
 
   decrease(payload: InventoryUpdatePayload): Observable<InventoryUpdateResult> {
     return this.http.post<InventoryUpdateResult>(`${this.baseUrl}/decrease`, payload);
+  }
+
+  getHistory(): Observable<InventoryHistoryEntry[]> {
+    return this.http.get<InventoryHistoryEntry[]>(`${this.baseUrl}/history`);
   }
 }

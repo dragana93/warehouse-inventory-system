@@ -1,0 +1,47 @@
+<div class="inventory-history">
+  <h1>Inventory History</h1>
+
+  @if (loading()) {
+    <div class="loading">
+      <mat-spinner diameter="48" />
+    </div>
+  } @else {
+    <table mat-table [dataSource]="entries()" matSort (matSortChange)="onSort($event)">
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <td mat-cell *matCellDef="let e">{{ e.date | date: 'short' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+        <td mat-cell *matCellDef="let e">{{ e.product }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="oldQuantity">
+        <th mat-header-cell *matHeaderCellDef>Old Quantity</th>
+        <td mat-cell *matCellDef="let e">{{ e.oldQuantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="newQuantity">
+        <th mat-header-cell *matHeaderCellDef>New Quantity</th>
+        <td mat-cell *matCellDef="let e">{{ e.newQuantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let e" [class]="'action-' + e.action">
+          {{ e.action | titlecase }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" [attr.colspan]="columns.length">
+          No history entries found.
+        </td>
+      </tr>
+    </table>
+  }
+</div>

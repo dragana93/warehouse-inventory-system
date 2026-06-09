@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { InventoryService } from './inventory.service';
-import { InventoryUpdatePayload, InventoryUpdateResult } from '../../models/inventory.model';
+import { InventoryHistoryEntry, InventoryUpdatePayload, InventoryUpdateResult } from '../../models/inventory.model';
 
 const BASE_URL = 'http://localhost:3000/inventory';
 
@@ -54,6 +54,27 @@ describe('InventoryService', () => {
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(payload);
       req.flush(decreaseResult);
+    });
+  });
+
+  describe('getHistory', () => {
+    it('should GET inventory history', () => {
+      const mockHistory: InventoryHistoryEntry[] = [
+        {
+          id: 1,
+          date: '2026-06-09T10:00:00.000Z',
+          product: 'Widget',
+          oldQuantity: 50,
+          newQuantity: 60,
+          action: 'increase',
+        },
+      ];
+
+      service.getHistory().subscribe((result) => expect(result).toEqual(mockHistory));
+
+      const req = httpMock.expectOne(`${BASE_URL}/history`);
+      expect(req.request.method).toBe('GET');
+      req.flush(mockHistory);
     });
   });
 });

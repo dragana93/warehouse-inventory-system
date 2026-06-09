@@ -10,3 +10,12 @@ export interface InventoryUpdateResult {
   previousQuantity: number;
   newQuantity: number;
 }
+
+export interface InventoryHistoryEntry {
+  id: number;
+  date: string;
+  product: string;
+  oldQuantity: number;
+  newQuantity: number;
+  action: InventoryAction;
+}
