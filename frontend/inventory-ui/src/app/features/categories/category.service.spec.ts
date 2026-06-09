@@ -69,7 +69,7 @@ describe('CategoryService', () => {
 
   describe('delete', () => {
     it('should DELETE a category by id', () => {
-      service.delete(1).subscribe((result) => expect(result).toBeUndefined());
+      service.delete(1).subscribe((result) => expect(result).toBeNull());
 
       const req = httpMock.expectOne(`${BASE_URL}/1`);
       expect(req.request.method).toBe('DELETE');

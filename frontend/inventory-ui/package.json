@@ -6,11 +6,13 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:coverage": "npx vitest run --coverage"
   },
   "private": true,
   "packageManager": "npm@10.8.2",
   "dependencies": {
+    "@angular/animations": "^21.2.0",
     "@angular/cdk": "^21.2.14",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",

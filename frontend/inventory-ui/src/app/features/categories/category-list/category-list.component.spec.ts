@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { CategoryListComponent } from './category-list.component';
 import { CategoryService } from '../category.service';
 import { Category, CategoryPayload } from '../../../models/category.model';
@@ -12,11 +12,8 @@ const mockCategories: Category[] = [
 ];
 
 function createDialogMock(afterClosedValue: unknown) {
-  const afterClosedSubject = new Subject<unknown>();
-  const dialogRef = { afterClosed: vi.fn().mockReturnValue(afterClosedSubject) };
+  const dialogRef = { afterClosed: vi.fn().mockReturnValue(of(afterClosedValue)) };
   const dialog = { open: vi.fn().mockReturnValue(dialogRef) };
-  afterClosedSubject.next(afterClosedValue);
-  afterClosedSubject.complete();
   return dialog;
 }
 

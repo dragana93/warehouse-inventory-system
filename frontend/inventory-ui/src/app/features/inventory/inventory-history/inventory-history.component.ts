@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -8,7 +8,7 @@ import { InventoryService } from '../inventory.service';
 
 @Component({
   selector: 'app-inventory-history',
-  imports: [DatePipe, MatTableModule, MatSortModule, MatProgressSpinnerModule],
+  imports: [DatePipe, TitleCasePipe, MatTableModule, MatSortModule, MatProgressSpinnerModule],
   templateUrl: './inventory-history.component.html',
   styleUrl: './inventory-history.component.scss',
 })
