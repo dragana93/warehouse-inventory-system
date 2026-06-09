@@ -1,0 +1,25 @@
+<div class="container">
+  <h1>Category Stock Report</h1>
+
+  @if (loading()) {
+    <mat-spinner diameter="48" />
+  } @else if (error()) {
+    <p class="error">Failed to load report. Please try again.</p>
+  } @else if (entries().length === 0) {
+    <p class="no-data">No data available.</p>
+  } @else {
+    <div class="cards">
+      @for (entry of entries(); track entry.category) {
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title>{{ entry.category }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="total">{{ entry.totalQuantity }}</p>
+            <p class="label">items in stock</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+</div>
