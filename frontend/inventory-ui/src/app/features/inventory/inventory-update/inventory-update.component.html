@@ -1,0 +1,69 @@
+<div class="inventory-update">
+  <h1>Inventory Update</h1>
+
+  @if (result(); as res) {
+    <div class="success-banner">
+      <mat-icon>check_circle</mat-icon>
+      <span>
+        Stock updated. Previous: <strong>{{ res.previousQuantity }}</strong> →
+        New: <strong>{{ res.newQuantity }}</strong>
+      </span>
+      <button mat-button (click)="reset()">Update another</button>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Product</mat-label>
+        <mat-select formControlName="productId">
+          @for (p of products(); track p.id) {
+            <mat-option [value]="p.id">
+              {{ p.name }} ({{ p.code }}) — current stock: {{ p.quantity }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (form.controls.productId.hasError('required') && form.controls.productId.touched) {
+          <mat-error>Product is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="action-group">
+        <label class="action-label">Action</label>
+        <mat-radio-group formControlName="action" class="radio-group">
+          <mat-radio-button value="increase">Increase stock</mat-radio-button>
+          <mat-radio-button value="decrease">Decrease stock</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input matInput type="number" formControlName="quantity" />
+        @if (form.controls.quantity.hasError('required') && form.controls.quantity.touched) {
+          <mat-error>Quantity is required</mat-error>
+        } @else if (form.controls.quantity.hasError('min') && form.controls.quantity.touched) {
+          <mat-error>Quantity must be at least 1</mat-error>
+        } @else if (form.controls.quantity.hasError('exceedsStock') && form.controls.quantity.touched) {
+          <mat-error>
+            Cannot decrease by {{ form.controls.quantity.getError('exceedsStock').requested }}.
+            Available stock: {{ form.controls.quantity.getError('exceedsStock').available }}
+          </mat-error>
+        }
+      </mat-form-field>
+
+      @if (serverError()) {
+        <p class="server-error">{{ serverError() }}</p>
+      }
+
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading()"
+        >
+          {{ loading() ? 'Saving…' : 'Apply' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

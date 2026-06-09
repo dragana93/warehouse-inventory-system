@@ -5,6 +5,7 @@ import { ProductListComponent } from './features/products/product-list/product-l
 import { ProductDetailComponent } from './features/products/product-detail/product-detail.component';
 import { ProductNewComponent } from './features/products/product-new/product-new.component';
 import { ProductEditComponent } from './features/products/product-edit/product-edit.component';
+import { InventoryUpdateComponent } from './features/inventory/inventory-update/inventory-update.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'products/edit/:id', component: ProductEditComponent },
       { path: 'products/:id', component: ProductDetailComponent },
       { path: 'categories', component: CategoryListComponent },
+      { path: 'inventory/update', component: InventoryUpdateComponent },
       { path: '', redirectTo: 'products', pathMatch: 'full' },
     ],
   },

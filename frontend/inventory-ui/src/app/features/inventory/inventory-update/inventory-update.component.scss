@@ -1,0 +1,57 @@
+.inventory-update {
+  padding: 24px;
+  max-width: 480px;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.action-label {
+  font-weight: 500;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background-color: var(--mat-sys-surface-variant);
+  border-radius: 8px;
+
+  mat-icon {
+    color: green;
+  }
+}
+
+.server-error {
+  color: var(--mat-sys-error);
+  margin: 0;
+}

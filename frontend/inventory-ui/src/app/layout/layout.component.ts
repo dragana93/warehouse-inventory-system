@@ -37,6 +37,7 @@ export class LayoutComponent {
   readonly navItems: NavItem[] = [
     { label: 'Products', icon: 'inventory_2', path: '/products' },
     { label: 'Categories', icon: 'category', path: '/categories' },
+    { label: 'Inventory Update', icon: 'edit_note', path: '/inventory/update' },
     { label: 'Inventory History', icon: 'history', path: '/inventory/history' },
     { label: 'Reports', icon: 'bar_chart', path: '/reports' },
   ];

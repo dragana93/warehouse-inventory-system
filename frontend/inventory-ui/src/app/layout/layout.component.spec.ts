@@ -35,11 +35,11 @@ describe('LayoutComponent', () => {
       expect(toolbar.textContent).toContain('Warehouse Inventory System');
     });
 
-    it('should render all four navigation items', async () => {
+    it('should render all five navigation items', async () => {
       const fixture = TestBed.createComponent(LayoutComponent);
       await fixture.whenStable();
       const navLinks = fixture.nativeElement.querySelectorAll('mat-nav-list a');
-      expect(navLinks.length).toBe(4);
+      expect(navLinks.length).toBe(5);
     });
 
     it('should include Products in navigation', async () => {
@@ -54,6 +54,13 @@ describe('LayoutComponent', () => {
       await fixture.whenStable();
       const navList = fixture.nativeElement.querySelector('mat-nav-list') as HTMLElement;
       expect(navList.textContent).toContain('Categories');
+    });
+
+    it('should include Inventory Update in navigation', async () => {
+      const fixture = TestBed.createComponent(LayoutComponent);
+      await fixture.whenStable();
+      const navList = fixture.nativeElement.querySelector('mat-nav-list') as HTMLElement;
+      expect(navList.textContent).toContain('Inventory Update');
     });
 
     it('should include Inventory History in navigation', async () => {
