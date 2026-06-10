@@ -16,10 +16,10 @@ export class CategoryRepository {
         products: { select: { quantity: true } },
       },
     });
-    return rows.map((row: any) => ({
+    return rows.map((row) => ({
       id: row.id,
       name: row.name,
-      totalStock: row.products.reduce((sum: number, p: any) => sum + p.quantity, 0),
+      totalStock: row.products.reduce((sum, p) => sum + p.quantity, 0),
     }));
   }
 

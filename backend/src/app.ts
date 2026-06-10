@@ -6,6 +6,7 @@ import categoryRoutes from "./categories/category.routes";
 import productRoutes from "./products/product.routes";
 import inventoryRoutes from "./inventory/inventory.routes";
 import auditLogRoutes from "./audit-log/audit-log.routes";
+import reportRoutes from "./reports/report.routes";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/categories", categoryRoutes);
 app.use("/products", productRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/history", auditLogRoutes);
+app.use("/reports", reportRoutes);
 
 app.use(errorMiddleware);
 

@@ -1,15 +1,33 @@
 import prisma from '../database/database.client';
-import { AuditLogEntry, CreateAuditLogDto } from './audit-log.model';
+import { AuditAction, AuditLogEntry, CreateAuditLogDto } from './audit-log.model';
+
+function toAuditLogEntry(row: {
+  id: number;
+  productId: number;
+  oldQuantity: number;
+  newQuantity: number;
+  action: string;
+  timestamp: Date;
+}): AuditLogEntry {
+  return {
+    id: row.id,
+    productId: row.productId,
+    oldQuantity: row.oldQuantity,
+    newQuantity: row.newQuantity,
+    action: row.action as AuditAction,
+    timestamp: row.timestamp,
+  };
+}
 
 export class AuditLogRepository {
   async create(dto: CreateAuditLogDto): Promise<AuditLogEntry> {
     const entry = await prisma.inventoryHistory.create({ data: dto });
-    return entry as AuditLogEntry;
+    return toAuditLogEntry(entry);
   }
 
   async findAll(): Promise<AuditLogEntry[]> {
     const entries = await prisma.inventoryHistory.findMany({ orderBy: { timestamp: 'desc' } });
-    return entries as AuditLogEntry[];
+    return entries.map(toAuditLogEntry);
   }
 
   async findByProductId(productId: number): Promise<AuditLogEntry[]> {
@@ -17,6 +35,6 @@ export class AuditLogRepository {
       where: { productId },
       orderBy: { timestamp: 'desc' },
     });
-    return entries as AuditLogEntry[];
+    return entries.map(toAuditLogEntry);
   }
 }

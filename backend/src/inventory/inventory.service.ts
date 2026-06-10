@@ -10,6 +10,9 @@ export class InventoryService {
   ) {}
 
   async increaseStock(productId: number, dto: StockUpdateDto): Promise<StockUpdateResult> {
+    if (dto.amount <= 0) {
+      throw new AppError(400, 'Amount must be greater than zero', true);
+    }
     const product = await this.productRepository.findById(productId);
     if (!product) {
       throw new AppError(404, `Product with id ${productId} not found`);
@@ -26,6 +29,9 @@ export class InventoryService {
   }
 
   async decreaseStock(productId: number, dto: StockUpdateDto): Promise<StockUpdateResult> {
+    if (dto.amount <= 0) {
+      throw new AppError(400, 'Amount must be greater than zero', true);
+    }
     const product = await this.productRepository.findById(productId);
     if (!product) {
       throw new AppError(404, `Product with id ${productId} not found`);

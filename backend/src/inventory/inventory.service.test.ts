@@ -50,6 +50,18 @@ describe('InventoryService.increaseStock', () => {
     });
   });
 
+  it('should throw 400 AppError when amount is zero', async () => {
+    await expect(service.increaseStock(1, { amount: 0 })).rejects.toThrow(AppError);
+    await expect(service.increaseStock(1, { amount: 0 })).rejects.toMatchObject({ statusCode: 400 });
+    expect(mockRepository.findById).not.toHaveBeenCalled();
+  });
+
+  it('should throw 400 AppError when amount is negative', async () => {
+    await expect(service.increaseStock(1, { amount: -5 })).rejects.toThrow(AppError);
+    await expect(service.increaseStock(1, { amount: -5 })).rejects.toMatchObject({ statusCode: 400 });
+    expect(mockRepository.findById).not.toHaveBeenCalled();
+  });
+
   it('should throw 404 AppError when product does not exist', async () => {
     mockRepository.findById.mockResolvedValue(null);
 
@@ -94,6 +106,18 @@ describe('InventoryService.decreaseStock', () => {
       newQuantity: 0,
       action: 'decrease',
     });
+  });
+
+  it('should throw 400 AppError when amount is zero', async () => {
+    await expect(service.decreaseStock(1, { amount: 0 })).rejects.toThrow(AppError);
+    await expect(service.decreaseStock(1, { amount: 0 })).rejects.toMatchObject({ statusCode: 400 });
+    expect(mockRepository.findById).not.toHaveBeenCalled();
+  });
+
+  it('should throw 400 AppError when amount is negative', async () => {
+    await expect(service.decreaseStock(1, { amount: -5 })).rejects.toThrow(AppError);
+    await expect(service.decreaseStock(1, { amount: -5 })).rejects.toMatchObject({ statusCode: 400 });
+    expect(mockRepository.findById).not.toHaveBeenCalled();
   });
 
   it('should throw 400 AppError when decrease would result in negative quantity', async () => {

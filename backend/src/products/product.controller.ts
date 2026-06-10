@@ -12,8 +12,12 @@ export class ProductController {
       if (req.query['search']) query.search = String(req.query['search']);
       if (req.query['categoryId']) query.categoryId = Number(req.query['categoryId']);
       if (req.query['code']) query.code = String(req.query['code']);
-      if (req.query['sortBy']) query.sortBy = String(req.query['sortBy']) as SortField;
-      if (req.query['sortOrder']) query.sortOrder = String(req.query['sortOrder']) as SortOrder;
+      const sortBy = String(req.query['sortBy'] ?? '');
+      const validSortFields: SortField[] = ['name', 'quantity'];
+      if (validSortFields.includes(sortBy as SortField)) query.sortBy = sortBy as SortField;
+      const sortOrder = String(req.query['sortOrder'] ?? '');
+      const validSortOrders: SortOrder[] = ['asc', 'desc'];
+      if (validSortOrders.includes(sortOrder as SortOrder)) query.sortOrder = sortOrder as SortOrder;
       if (req.query['page']) query.page = Number(req.query['page']);
       if (req.query['pageSize']) query.pageSize = Number(req.query['pageSize']);
       const result = await this.service.getAll(query);
