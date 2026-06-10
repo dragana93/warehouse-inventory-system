@@ -16,7 +16,7 @@ beforeEach(() => {
 
 describe('CategoryService.getSummary', () => {
   it('should return summary from repository', async () => {
-    const summary: CategorySummary[] = [{ id: 1, name: 'Electronics', productCount: 5 }];
+    const summary: CategorySummary[] = [{ id: 1, name: 'Electronics', totalStock: 5 }];
     mockRepository.getSummary.mockResolvedValue(summary);
 
     const result = await service.getSummary();

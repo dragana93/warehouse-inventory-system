@@ -1,11 +1,11 @@
 import { AppError } from '../middleware/error.middleware';
-import { CreateProductDto, Product, ProductQuery, UpdateProductDto } from './product.model';
+import { CreateProductDto, Product, ProductListResponse, ProductQuery, UpdateProductDto } from './product.model';
 import { ProductRepository } from './product.repository';
 
 export class ProductService {
   constructor(private readonly repository: ProductRepository) {}
 
-  async getAll(query: ProductQuery = {}): Promise<Product[]> {
+  async getAll(query: ProductQuery = {}): Promise<ProductListResponse> {
     return this.repository.findAll(query);
   }
 

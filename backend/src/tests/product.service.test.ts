@@ -10,6 +10,7 @@ jest.mock('../database/database.client', () => ({
       create: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
+      count: jest.fn(),
     },
   },
 }));
@@ -21,6 +22,7 @@ const mockPrisma = prisma as unknown as {
     create: jest.Mock;
     update: jest.Mock;
     delete: jest.Mock;
+    count: jest.Mock;
   };
 };
 
@@ -40,15 +42,17 @@ beforeEach(() => jest.clearAllMocks());
 describe('ProductRepository.findAll', () => {
   it('should return all products', async () => {
     mockPrisma.product.findMany.mockResolvedValue([sampleProduct]);
+    mockPrisma.product.count.mockResolvedValue(1);
 
     const result = await repository.findAll();
 
-    expect(result).toEqual([sampleProduct]);
+    expect(result).toEqual({ data: [sampleProduct], total: 1, page: 1, pageSize: 10 });
     expect(mockPrisma.product.findMany).toHaveBeenCalledTimes(1);
   });
 
   it('should pass categoryId filter', async () => {
     mockPrisma.product.findMany.mockResolvedValue([sampleProduct]);
+    mockPrisma.product.count.mockResolvedValue(1);
 
     await repository.findAll({ categoryId: 1 });
 
@@ -59,6 +63,7 @@ describe('ProductRepository.findAll', () => {
 
   it('should pass code filter', async () => {
     mockPrisma.product.findMany.mockResolvedValue([sampleProduct]);
+    mockPrisma.product.count.mockResolvedValue(1);
 
     await repository.findAll({ code: 'PRD-001' });
 
@@ -69,6 +74,7 @@ describe('ProductRepository.findAll', () => {
 
   it('should pass sortBy name', async () => {
     mockPrisma.product.findMany.mockResolvedValue([sampleProduct]);
+    mockPrisma.product.count.mockResolvedValue(1);
 
     await repository.findAll({ sortBy: 'name', sortOrder: 'asc' });
 

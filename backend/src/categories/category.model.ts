@@ -6,7 +6,7 @@ export interface Category {
 export interface CategorySummary {
   id: number;
   name: string;
-  productCount: number;
+  totalStock: number;
 }
 
 export interface CreateCategoryDto {

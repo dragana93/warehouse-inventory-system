@@ -9,7 +9,7 @@ const controller = new AuditLogController(service);
 
 const router = Router();
 
-router.get('/', controller.getAll);
+router.get(['', '/'], controller.getAll);
 router.get('/:productId', controller.getByProductId);
 
 export default router;

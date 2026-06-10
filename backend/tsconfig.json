@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2020",
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
     "sourceMap": true,
     "declaration": true,
@@ -12,10 +12,12 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "generated/prisma": ["./generated/prisma"]
+      "generated/prisma": ["./generated/prisma/client"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "generated"],
+  "exclude": ["node_modules", "dist"]
 }

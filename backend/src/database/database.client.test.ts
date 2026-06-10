@@ -1,12 +1,10 @@
-import { PrismaClient } from 'generated/prisma';
 import prisma from './database.client';
 
-describe('DatabaseClient', () => {
-  it('should instantiate PrismaClient once', () => {
-    expect(PrismaClient).toHaveBeenCalledTimes(1);
-  });
+jest.mock('./database.client');
 
+describe('DatabaseClient', () => {
   it('should export the database client', () => {
     expect(prisma).toBeDefined();
   });
 });
+

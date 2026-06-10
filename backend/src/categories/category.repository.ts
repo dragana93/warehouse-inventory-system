@@ -12,12 +12,14 @@ export class CategoryRepository {
 
   async getSummary(): Promise<CategorySummary[]> {
     const rows = await prisma.category.findMany({
-      include: { _count: { select: { products: true } } },
+      include: {
+        products: { select: { quantity: true } },
+      },
     });
-    return rows.map((row) => ({
+    return rows.map((row: any) => ({
       id: row.id,
       name: row.name,
-      productCount: row._count.products,
+      totalStock: row.products.reduce((sum: number, p: any) => sum + p.quantity, 0),
     }));
   }
 

@@ -73,14 +73,20 @@ Acceptance Criteria
 
 ---
 
-### BE-07 Filtering and Sorting
+### BE-07 Filtering, Searching and Sorting
 
 Acceptance Criteria
 
-* Filter by category
-* Filter by code
-* Sort by name
-* Sort by quantity
+- Search by name
+- Filter by category
+- Filter by code
+- Sort by name
+- Sort by quantity
+
+Query Parameters
+
+?page=1
+&pageSize=10
 
 ---
 
@@ -138,20 +144,24 @@ Acceptance Criteria
 
 Acceptance Criteria
 
+FE-04 Product List Screen
+
 Display
 
-* Code
-* Name
-* Price
-* Quantity
-* Category
+- Code
+- Name
+- Price
+- Quantity
+- Category
 
 Features
 
-* Pagination
-* Search
-* Sorting
-* Filtering
+- Search by product name
+- Filter by category
+- Filter by code
+- Sort by name
+- Sort by quantity
+- Pagination
 
 ---
 
@@ -232,3 +242,23 @@ Acceptance Criteria
 * Service tests
 * Component tests
 * 70%+ coverage
+
+### FE-11 Error Handling
+
+Acceptance Criteria
+
+- Global HTTP error interceptor
+- Snackbar error notifications
+- User friendly error messages
+- API errors displayed correctly
+
+
+### FE-12 API Integration
+
+Acceptance Criteria
+
+- ProductService consumes Product API
+- CategoryService consumes Category API
+- InventoryService consumes Inventory API
+- ReportService consumes Report API
+- Proper error handling implemented

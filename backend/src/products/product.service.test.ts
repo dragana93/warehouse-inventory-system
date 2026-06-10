@@ -1,5 +1,5 @@
 import { AppError } from '../middleware/error.middleware';
-import { Product, ProductQuery } from './product.model';
+import { Product, ProductListResponse, ProductQuery } from './product.model';
 import { ProductRepository } from './product.repository';
 import { ProductService } from './product.service';
 
@@ -23,24 +23,27 @@ beforeEach(() => {
 
 describe('ProductService.getAll', () => {
   it('should return all products with no query', async () => {
-    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const response: ProductListResponse = { data: [sampleProduct], total: 1, page: 1, pageSize: 10 };
+    mockRepository.findAll.mockResolvedValue(response);
 
     const result = await service.getAll();
 
-    expect(result).toEqual([sampleProduct]);
+    expect(result).toEqual(response);
     expect(mockRepository.findAll).toHaveBeenCalledWith({});
   });
 
-  it('should return an empty array when no products exist', async () => {
-    mockRepository.findAll.mockResolvedValue([]);
+  it('should return an empty result when no products exist', async () => {
+    const response: ProductListResponse = { data: [], total: 0, page: 1, pageSize: 10 };
+    mockRepository.findAll.mockResolvedValue(response);
 
     const result = await service.getAll();
 
-    expect(result).toEqual([]);
+    expect(result).toEqual(response);
   });
 
   it('should pass categoryId filter to repository', async () => {
-    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const response: ProductListResponse = { data: [sampleProduct], total: 1, page: 1, pageSize: 10 };
+    mockRepository.findAll.mockResolvedValue(response);
     const query: ProductQuery = { categoryId: 1 };
 
     await service.getAll(query);
@@ -49,7 +52,8 @@ describe('ProductService.getAll', () => {
   });
 
   it('should pass code filter to repository', async () => {
-    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const response: ProductListResponse = { data: [sampleProduct], total: 1, page: 1, pageSize: 10 };
+    mockRepository.findAll.mockResolvedValue(response);
     const query: ProductQuery = { code: 'PROD-001' };
 
     await service.getAll(query);
@@ -58,7 +62,8 @@ describe('ProductService.getAll', () => {
   });
 
   it('should pass sortBy name to repository', async () => {
-    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const response: ProductListResponse = { data: [sampleProduct], total: 1, page: 1, pageSize: 10 };
+    mockRepository.findAll.mockResolvedValue(response);
     const query: ProductQuery = { sortBy: 'name', sortOrder: 'asc' };
 
     await service.getAll(query);
@@ -67,7 +72,8 @@ describe('ProductService.getAll', () => {
   });
 
   it('should pass sortBy quantity to repository', async () => {
-    mockRepository.findAll.mockResolvedValue([sampleProduct]);
+    const response: ProductListResponse = { data: [sampleProduct], total: 1, page: 1, pageSize: 10 };
+    mockRepository.findAll.mockResolvedValue(response);
     const query: ProductQuery = { sortBy: 'quantity', sortOrder: 'desc' };
 
     await service.getAll(query);

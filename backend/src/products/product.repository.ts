@@ -1,16 +1,26 @@
 import prisma from '../database/database.client';
-import { CreateProductDto, Product, ProductQuery, UpdateProductDto } from './product.model';
+import { CreateProductDto, Product, ProductListResponse, ProductQuery, UpdateProductDto } from './product.model';
 
 export class ProductRepository {
-  async findAll(query: ProductQuery = {}): Promise<Product[]> {
-    const where: { categoryId?: number; code?: string } = {};
+  async findAll(query: ProductQuery = {}): Promise<ProductListResponse> {
+    const where: { name?: { contains: string }; categoryId?: number; code?: string } = {};
+    if (query.search !== undefined) where.name = { contains: query.search };
     if (query.categoryId !== undefined) where.categoryId = query.categoryId;
     if (query.code !== undefined) where.code = query.code;
 
     const orderBy: { name?: 'asc' | 'desc'; quantity?: 'asc' | 'desc' } = {};
     if (query.sortBy) orderBy[query.sortBy] = query.sortOrder ?? 'asc';
 
-    return prisma.product.findMany({ where, orderBy });
+    const page = query.page ?? 1;
+    const pageSize = query.pageSize ?? 10;
+    const skip = (page - 1) * pageSize;
+
+    const [data, total] = await Promise.all([
+      prisma.product.findMany({ where, orderBy, skip, take: pageSize }),
+      prisma.product.count({ where }),
+    ]);
+
+    return { data, total, page, pageSize };
   }
 
   async findById(id: number): Promise<Product | null> {
