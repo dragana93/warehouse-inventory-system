@@ -7,6 +7,7 @@ import { InventoryHistoryEntry, StockUpdateResult } from '../../models/inventory
 export class InventoryService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = 'http://localhost:3000/inventory';
+  private readonly historyUrl = 'http://localhost:3000/history';
 
   increase(productId: number, amount: number): Observable<StockUpdateResult> {
     return this.http.post<StockUpdateResult>(`${this.baseUrl}/${productId}/increase`, { amount });
@@ -17,6 +18,6 @@ export class InventoryService {
   }
 
   getHistory(): Observable<InventoryHistoryEntry[]> {
-    return this.http.get<InventoryHistoryEntry[]>(`${this.baseUrl}/history`);
+    return this.http.get<InventoryHistoryEntry[]>(this.historyUrl);
   }
 }

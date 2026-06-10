@@ -5,6 +5,7 @@ import { InventoryService } from './inventory.service';
 import { InventoryHistoryEntry, StockUpdateResult } from '../../models/inventory.model';
 
 const BASE_URL = 'http://localhost:3000/inventory';
+const HISTORY_URL = 'http://localhost:3000/history';
 
 const mockStockResult: StockUpdateResult = {
   id: 1,
@@ -68,7 +69,7 @@ describe('InventoryService', () => {
 
       service.getHistory().subscribe((result) => expect(result).toEqual(mockHistory));
 
-      const req = httpMock.expectOne(`${BASE_URL}/history`);
+      const req = httpMock.expectOne(HISTORY_URL);
       expect(req.request.method).toBe('GET');
       req.flush(mockHistory);
     });

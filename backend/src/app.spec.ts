@@ -244,7 +244,8 @@ const historyEntry = {
   oldQuantity: 10,
   newQuantity: 15,
   action: 'increase',
-  timestamp: new Date().toISOString(),
+  timestamp: new Date('2026-01-01T00:00:00.000Z'),
+  product: { name: 'Widget' },
 };
 
 describe('GET /history', () => {

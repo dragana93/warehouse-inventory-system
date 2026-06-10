@@ -11,11 +11,11 @@ describe('AuditLogService', () => {
 
   const entry = {
     id: 1,
-    productId: 1,
+    date: '2026-01-01T00:00:00.000Z',
+    product: 'Widget',
     oldQuantity: 10,
     newQuantity: 15,
     action: 'increase' as const,
-    timestamp: new Date(),
   };
 
   beforeEach(() => {

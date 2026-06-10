@@ -19,8 +19,8 @@ beforeEach(() => {
 describe('ReportController.getStockPerCategory', () => {
   it('should return stock report as JSON', async () => {
     const report: StockReport[] = [
-      { id: 1, name: 'Beverages', totalStock: 120 },
-      { id: 2, name: 'Snacks', totalStock: 80 },
+      { category: 'Beverages', totalQuantity: 120 },
+      { category: 'Snacks', totalQuantity: 80 },
     ];
     mockService.getStockPerCategory.mockResolvedValue(report);
 

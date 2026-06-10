@@ -26,7 +26,17 @@ const sampleEntry = {
   oldQuantity: 100,
   newQuantity: 80,
   action: 'decrease' as const,
-  timestamp: new Date('2026-01-01T00:00:00Z'),
+  timestamp: new Date('2026-01-01T00:00:00.000Z'),
+  product: { name: 'Widget' },
+};
+
+const expectedResponse = {
+  id: 1,
+  date: '2026-01-01T00:00:00.000Z',
+  product: 'Widget',
+  oldQuantity: 100,
+  newQuantity: 80,
+  action: 'decrease',
 };
 
 beforeEach(() => jest.clearAllMocks());
@@ -38,7 +48,14 @@ describe('AuditLogRepository.create', () => {
 
     const result = await repository.create(dto);
 
-    expect(result).toEqual(sampleEntry);
+    expect(result).toEqual({
+      id: 1,
+      productId: 1,
+      oldQuantity: 100,
+      newQuantity: 80,
+      action: 'decrease',
+      timestamp: new Date('2026-01-01T00:00:00.000Z'),
+    });
     expect(mockPrisma.inventoryHistory.create).toHaveBeenCalledWith({ data: dto });
   });
 });
@@ -49,8 +66,9 @@ describe('AuditLogRepository.findAll', () => {
 
     const result = await repository.findAll();
 
-    expect(result).toEqual([sampleEntry]);
+    expect(result).toEqual([expectedResponse]);
     expect(mockPrisma.inventoryHistory.findMany).toHaveBeenCalledWith({
+      include: { product: { select: { name: true } } },
       orderBy: { timestamp: 'desc' },
     });
   });
@@ -62,9 +80,10 @@ describe('AuditLogRepository.findByProductId', () => {
 
     const result = await repository.findByProductId(1);
 
-    expect(result).toEqual([sampleEntry]);
+    expect(result).toEqual([expectedResponse]);
     expect(mockPrisma.inventoryHistory.findMany).toHaveBeenCalledWith({
       where: { productId: 1 },
+      include: { product: { select: { name: true } } },
       orderBy: { timestamp: 'desc' },
     });
   });

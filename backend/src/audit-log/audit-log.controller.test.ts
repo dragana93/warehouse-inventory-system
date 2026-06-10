@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AuditLogController } from './audit-log.controller';
 import { AuditLogService } from './audit-log.service';
-import { AuditLogEntry } from './audit-log.model';
+import { AuditLogResponse } from './audit-log.model';
 
 jest.mock('./audit-log.service');
 
@@ -11,13 +11,13 @@ const controller = new AuditLogController(mockService);
 const mockRes = { json: jest.fn() } as unknown as Response;
 const mockNext = jest.fn() as NextFunction;
 
-const sampleEntry: AuditLogEntry = {
+const sampleEntry: AuditLogResponse = {
   id: 1,
-  productId: 1,
+  date: '2026-01-01T00:00:00.000Z',
+  product: 'Widget',
   oldQuantity: 50,
   newQuantity: 60,
   action: 'increase',
-  timestamp: new Date('2026-01-01T00:00:00Z'),
 };
 
 beforeEach(() => {

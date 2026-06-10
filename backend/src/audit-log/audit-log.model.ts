@@ -9,6 +9,16 @@ export interface AuditLogEntry {
   timestamp: Date;
 }
 
+// Shape returned by the API — matches the frontend InventoryHistoryEntry model
+export interface AuditLogResponse {
+  id: number;
+  date: string;
+  product: string;
+  oldQuantity: number;
+  newQuantity: number;
+  action: AuditAction;
+}
+
 export interface CreateAuditLogDto {
   productId: number;
   oldQuantity: number;

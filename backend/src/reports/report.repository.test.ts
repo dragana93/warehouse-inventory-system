@@ -30,19 +30,19 @@ describe('ReportRepository.getStockPerCategory', () => {
     const result = await repository.getStockPerCategory();
 
     expect(result).toEqual([
-      { id: 1, name: 'Beverages', totalStock: 120 },
-      { id: 2, name: 'Snacks', totalStock: 80 },
+      { category: 'Beverages', totalQuantity: 120 },
+      { category: 'Snacks', totalQuantity: 80 },
     ]);
   });
 
-  it('should return zero totalStock for a category with no products', async () => {
+  it('should return zero totalQuantity for a category with no products', async () => {
     mockPrisma.category.findMany.mockResolvedValue([
       { id: 1, name: 'Empty', products: [] },
     ]);
 
     const result = await repository.getStockPerCategory();
 
-    expect(result).toEqual([{ id: 1, name: 'Empty', totalStock: 0 }]);
+    expect(result).toEqual([{ category: 'Empty', totalQuantity: 0 }]);
   });
 
   it('should return an empty array when no categories exist', async () => {

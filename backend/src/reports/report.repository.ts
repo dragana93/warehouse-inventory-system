@@ -9,9 +9,8 @@ export class ReportRepository {
       },
     });
     return rows.map((row) => ({
-      id: row.id,
-      name: row.name,
-      totalStock: row.products.reduce((sum, p) => sum + p.quantity, 0),
+      category: row.name,
+      totalQuantity: row.products.reduce((sum, p) => sum + p.quantity, 0),
     }));
   }
 }

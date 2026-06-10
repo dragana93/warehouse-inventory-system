@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1781097764571" clover="3.2.0">
-  <project timestamp="1781097764571" name="All files">
-    <metrics statements="319" coveredstatements="319" conditionals="61" coveredconditionals="60" methods="65" coveredmethods="65" elements="445" coveredelements="444" complexity="0" loc="319" ncloc="319" packages="9" files="24" classes="24"/>
+<coverage generated="1781100051460" clover="3.2.0">
+  <project timestamp="1781100051460" name="All files">
+    <metrics statements="320" coveredstatements="320" conditionals="61" coveredconditionals="60" methods="66" coveredmethods="66" elements="447" coveredelements="446" complexity="0" loc="320" ncloc="320" packages="9" files="24" classes="24"/>
     <package name="src">
       <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.ts" path="C:\Users\DraganaSavanovic\source\repos\e1-course\warehouse-inventory-system\backend\src\app.ts">
@@ -29,7 +29,7 @@
       </file>
     </package>
     <package name="src.audit-log">
-      <metrics statements="37" coveredstatements="37" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="10"/>
+      <metrics statements="38" coveredstatements="38" conditionals="0" coveredconditionals="0" methods="11" coveredmethods="11"/>
       <file name="audit-log.controller.ts" path="C:\Users\DraganaSavanovic\source\repos\e1-course\warehouse-inventory-system\backend\src\audit-log\audit-log.controller.ts">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="4" count="3" type="stmt"/>
@@ -47,16 +47,17 @@
         <line num="22" count="1" type="stmt"/>
       </file>
       <file name="audit-log.repository.ts" path="C:\Users\DraganaSavanovic\source\repos\e1-course\warehouse-inventory-system\backend\src\audit-log\audit-log.repository.ts">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="1" count="8" type="stmt"/>
-        <line num="12" count="10" type="stmt"/>
-        <line num="22" count="8" type="stmt"/>
-        <line num="24" count="4" type="stmt"/>
-        <line num="25" count="4" type="stmt"/>
-        <line num="29" count="3" type="stmt"/>
-        <line num="30" count="3" type="stmt"/>
-        <line num="34" count="4" type="stmt"/>
-        <line num="38" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="30" count="6" type="stmt"/>
+        <line num="40" count="8" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
       </file>
       <file name="audit-log.routes.ts" path="C:\Users\DraganaSavanovic\source\repos\e1-course\warehouse-inventory-system\backend\src\audit-log\audit-log.routes.ts">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -390,7 +391,7 @@
         <line num="4" count="4" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
       </file>
       <file name="report.routes.ts" path="C:\Users\DraganaSavanovic\source\repos\e1-course\warehouse-inventory-system\backend\src\reports\report.routes.ts">
         <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

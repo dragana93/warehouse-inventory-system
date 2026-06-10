@@ -14,8 +14,8 @@ beforeEach(() => {
 describe('ReportService.getStockPerCategory', () => {
   it('should return stock totals per category', async () => {
     const report: StockReport[] = [
-      { id: 1, name: 'Beverages', totalStock: 120 },
-      { id: 2, name: 'Snacks', totalStock: 80 },
+      { category: 'Beverages', totalQuantity: 120 },
+      { category: 'Snacks', totalQuantity: 80 },
     ];
     mockRepository.getStockPerCategory.mockResolvedValue(report);
 
@@ -33,12 +33,12 @@ describe('ReportService.getStockPerCategory', () => {
     expect(result).toEqual([]);
   });
 
-  it('should return zero totalStock for a category with no products', async () => {
-    const report: StockReport[] = [{ id: 1, name: 'Empty', totalStock: 0 }];
+  it('should return zero totalQuantity for a category with no products', async () => {
+    const report: StockReport[] = [{ category: 'Empty', totalQuantity: 0 }];
     mockRepository.getStockPerCategory.mockResolvedValue(report);
 
     const result = await service.getStockPerCategory();
 
-    expect(result[0]).toMatchObject({ totalStock: 0 });
+    expect(result[0]).toMatchObject({ totalQuantity: 0 });
   });
 });

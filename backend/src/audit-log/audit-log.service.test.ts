@@ -1,4 +1,4 @@
-import { AuditLogEntry } from './audit-log.model';
+import { AuditLogResponse } from './audit-log.model';
 import { AuditLogRepository } from './audit-log.repository';
 import { AuditLogService } from './audit-log.service';
 
@@ -7,13 +7,13 @@ jest.mock('./audit-log.repository');
 const mockRepository = new AuditLogRepository() as jest.Mocked<AuditLogRepository>;
 const service = new AuditLogService(mockRepository);
 
-const sampleEntry: AuditLogEntry = {
+const sampleEntry: AuditLogResponse = {
   id: 1,
-  productId: 1,
+  date: '2026-01-01T00:00:00.000Z',
+  product: 'Widget',
   oldQuantity: 50,
   newQuantity: 60,
   action: 'increase',
-  timestamp: new Date('2026-01-01T00:00:00Z'),
 };
 
 beforeEach(() => {
