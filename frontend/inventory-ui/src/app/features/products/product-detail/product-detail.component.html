@@ -23,13 +23,13 @@
           <dd>{{ p.name }}</dd>
 
           <dt>Price</dt>
-          <dd>{{ p.price | currency }}</dd>
+          <dd>{{ p.price | currency:'EUR' }}</dd>
 
           <dt>Quantity</dt>
           <dd>{{ p.quantity }}</dd>
 
           <dt>Category</dt>
-          <dd>{{ p.category.name }}</dd>
+          <dd>{{ p.category?.name }}</dd>
         </dl>
       </mat-card-content>
 

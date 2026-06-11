@@ -16,7 +16,7 @@ export class ProductRepository {
     const skip = (page - 1) * pageSize;
 
     const [data, total] = await Promise.all([
-      prisma.product.findMany({ where, orderBy, skip, take: pageSize }),
+      prisma.product.findMany({ where, orderBy, skip, take: pageSize, include: { category: true } }),
       prisma.product.count({ where }),
     ]);
 
@@ -24,7 +24,7 @@ export class ProductRepository {
   }
 
   async findById(id: number): Promise<Product | null> {
-    return prisma.product.findUnique({ where: { id } });
+    return prisma.product.findUnique({ where: { id }, include: { category: true } });
   }
 
   async create(dto: CreateProductDto): Promise<Product> {

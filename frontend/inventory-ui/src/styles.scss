@@ -1,8 +1,3 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
 html {
@@ -20,20 +15,140 @@ html {
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
   color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
+  background-color: #f4f6f9;
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
   height: 100%;
 }
-/* You can add global styles to this file, and also import other style files */
+
+/* Typography */
+h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  color: var(--mat-sys-on-surface);
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Page wrapper used in all feature pages */
+.page-wrapper {
+  padding: 28px 32px;
+  max-width: 1280px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Shared empty / loading states */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.empty-state {
+  padding: 48px;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.95rem;
+}
+
+.error-state {
+  padding: 16px;
+  color: var(--mat-sys-error);
+  text-align: center;
+}
+
+/* Snackbar error */
+.error-snackbar {
+  --mdc-snackbar-container-color: #d32f2f;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
+/* ── Sidenav nav item text colors — target MDC rendered DOM directly ── */
+.app-sidenav .mat-mdc-list-item .mdc-list-item__primary-text,
+.app-sidenav .mat-mdc-list-item span[matListItemTitle] {
+  color: #cbd5e1 !important;
+}
+
+.app-sidenav .mat-mdc-list-item .mat-icon,
+.app-sidenav .mat-mdc-list-item mat-icon {
+  color: #94a3b8 !important;
+}
+
+.app-sidenav .mat-mdc-list-item:hover .mdc-list-item__primary-text,
+.app-sidenav .mat-mdc-list-item:hover span[matListItemTitle] {
+  color: #f1f5f9 !important;
+}
+
+.app-sidenav .mat-mdc-list-item:hover .mat-icon,
+.app-sidenav .mat-mdc-list-item:hover mat-icon {
+  color: #cbd5e1 !important;
+}
+
+.app-sidenav .active-link .mdc-list-item__primary-text,
+.app-sidenav .active-link span[matListItemTitle] {
+  color: #60a5fa !important;
+}
+
+.app-sidenav .active-link .mat-icon,
+.app-sidenav .active-link mat-icon {
+  color: #60a5fa !important;
+}
+
+/* Table rows */
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: var(--mat-sys-surface-variant);
+}
+
+/* Quantity badge */
+.qty-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &.qty-ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  &.qty-low {
+    background: #fff3e0;
+    color: #e65100;
+  }
+
+  &.qty-critical {
+    background: #fce4ec;
+    color: #c62828;
+  }
+}
+
+/* Category chip */
+.category-chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
+}
+

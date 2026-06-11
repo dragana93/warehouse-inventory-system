@@ -91,7 +91,7 @@ describe('ProductRepository.findById', () => {
     const result = await repository.findById(1);
 
     expect(result).toEqual(sampleProduct);
-    expect(mockPrisma.product.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(mockPrisma.product.findUnique).toHaveBeenCalledWith({ where: { id: 1 }, include: { category: true } });
   });
 
   it('should return null when not found', async () => {

@@ -50,7 +50,7 @@ export class ProductListComponent implements OnInit {
   readonly pageSize = signal(10);
 
   readonly categoryNames = computed(() => [
-    ...new Set(this.allProducts().map((p) => p.category.name)),
+    ...new Set(this.allProducts().map((p) => p.category?.name).filter((name): name is string => !!name)),
   ]);
 
   readonly filteredProducts = computed(() => {
@@ -63,14 +63,14 @@ export class ProductListComponent implements OnInit {
     }
     const cat = this.categoryFilter();
     if (cat) {
-      list = list.filter((p) => p.category.name === cat);
+      list = list.filter((p) => p.category?.name === cat);
     }
     const field = this.sortField();
     if (field) {
       const dir = this.sortDir();
       list = [...list].sort((a, b) => {
-        const av = field === 'category' ? a.category.name : a[field as SortableField];
-        const bv = field === 'category' ? b.category.name : b[field as SortableField];
+        const av = field === 'category' ? (a.category?.name ?? '') : a[field as SortableField];
+        const bv = field === 'category' ? (b.category?.name ?? '') : b[field as SortableField];
         const cmp = av < bv ? -1 : av > bv ? 1 : 0;
         return dir === 'asc' ? cmp : -cmp;
       });
@@ -101,8 +101,8 @@ export class ProductListComponent implements OnInit {
   private loadProducts(): void {
     this.loading.set(true);
     this.productService.getAll().subscribe({
-      next: (products) => {
-        this.allProducts.set(products);
+      next: (response) => {
+        this.allProducts.set(response.data);
         this.loading.set(false);
       },
       error: () => {

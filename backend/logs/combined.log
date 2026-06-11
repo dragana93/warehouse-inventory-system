@@ -726,3 +726,218 @@
 {"durationMs":1,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-10T14:00:44.664Z","url":"/inventory/99/decrease"}
 {"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-10T14:00:44.668Z","url":"/history"}
 {"durationMs":0,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-10T14:00:44.673Z","url":"/history/1"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":404,"timestamp":"2026-06-10T14:13:13.779Z","url":"/categories"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.030Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.053Z","url":"/categories/summary"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T05:51:26.079Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T05:51:26.089Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:23:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:37:24)","timestamp":"2026-06-11T05:51:26.100Z"}
+{"durationMs":12,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T05:51:26.106Z","url":"/categories/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T05:51:26.114Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:31:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:47:7)","timestamp":"2026-06-11T05:51:26.120Z"}
+{"durationMs":3,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T05:51:26.122Z","url":"/categories/99"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.130Z","url":"/products?page=1&pageSize=10"}
+{"durationMs":0,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.136Z","url":"/products?search=cola&categoryId=1&code=P001&sortBy=name&sortOrder=asc"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.143Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:15:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:33:23)","timestamp":"2026-06-11T05:51:26.154Z"}
+{"durationMs":8,"level":"info","message":"Request","method":"GET","status":404,"timestamp":"2026-06-11T05:51:26.157Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T05:51:26.165Z","url":"/products"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T05:51:26.173Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:27:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:52:23)","timestamp":"2026-06-11T05:51:26.180Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T05:51:26.181Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T05:51:26.189Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:35:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:62:7)","timestamp":"2026-06-11T05:51:26.195Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T05:51:26.197Z","url":"/products/99"}
+{"durationMs":2,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T05:51:26.203Z","url":"/inventory/1/increase"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:18:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:11:22)","timestamp":"2026-06-11T05:51:26.212Z"}
+{"durationMs":5,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T05:51:26.214Z","url":"/inventory/99/increase"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T05:51:26.224Z","url":"/inventory/1/decrease"}
+{"level":"warn","message":"Validation failure Stock cannot be negative","timestamp":"2026-06-11T05:51:26.228Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":400,"timestamp":"2026-06-11T05:51:26.229Z","url":"/inventory/1/decrease"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:37:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:21:22)","timestamp":"2026-06-11T05:51:26.235Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T05:51:26.236Z","url":"/inventory/99/decrease"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.241Z","url":"/history"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T05:51:26.247Z","url":"/history/1"}
+{"durationMs":334,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:04:55.586Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:04:59.478Z","url":"/categories"}
+{"durationMs":18,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:05:21.155Z","url":"/categories"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:05:21.165Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:05:31.874Z","url":"/categories"}
+{"durationMs":8,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:05:54.263Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:05:54.268Z","url":"/categories"}
+{"durationMs":11,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:06:07.294Z","url":"/categories"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:06:07.302Z","url":"/categories"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:06:11.996Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:06:13.474Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:06:16.594Z","url":"/categories"}
+{"durationMs":16,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:07:01.985Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:07:02.004Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:36:26.374Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:36:47.635Z","url":"/products"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:40:30.853Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:41:19.384Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:45:57.531Z","url":"/products"}
+{"durationMs":7,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:46:02.525Z","url":"/products/1"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:46:05.633Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:46:07.511Z","url":"/products"}
+{"durationMs":366,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:52:10.326Z","url":"/products"}
+{"durationMs":8,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:52:16.573Z","url":"/products/1"}
+{"durationMs":8,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:52:19.983Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:52:27.891Z","url":"/categories"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:52:37.470Z","url":"/products"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:52:41.175Z","url":"/products"}
+{"durationMs":36,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T06:52:59.906Z","url":"/inventory/1/increase"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:53:08.218Z","url":"/history"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:53:15.166Z","url":"/reports/stock"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:53:22.562Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:54:00.747Z","url":"/categories"}
+{"durationMs":13,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:54:22.520Z","url":"/products"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:54:22.542Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:54:49.179Z","url":"/categories"}
+{"durationMs":9,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:55:05.065Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:55:05.073Z","url":"/categories"}
+{"durationMs":6,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:55:08.794Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:55:10.173Z","url":"/categories"}
+{"durationMs":10,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:55:54.914Z","url":"/products"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:55:54.930Z","url":"/products"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:56:13.971Z","url":"/categories"}
+{"durationMs":11,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:56:42.389Z","url":"/products"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:56:42.405Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:56:50.689Z","url":"/reports/stock"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:56:53.971Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:57:05.502Z","url":"/categories"}
+{"durationMs":11,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T06:57:31.892Z","url":"/products"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:57:31.910Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:57:39.644Z","url":"/products/1"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:57:39.651Z","url":"/categories"}
+{"durationMs":14,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T06:57:47.063Z","url":"/products/1"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:57:47.082Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:58:07.431Z","url":"/reports/stock"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:58:12.675Z","url":"/history"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T06:58:21.976Z","url":"/products"}
+{"durationMs":18,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T06:58:37.458Z","url":"/inventory/5/decrease"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:58:42.480Z","url":"/history"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T06:58:47.854Z","url":"/products"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:04:20.045Z","url":"/products"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:04:24.021Z","url":"/products"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:04:53.703Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:05:39.938Z","url":"/categories"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:05:40.646Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T07:05:42.866Z","url":"/products/1"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:05:45.265Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:07:22.517Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:07:29.895Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:07:30.616Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:07:31.570Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:08:43.807Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:09:14.452Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:09:16.203Z","url":"/categories"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:10:06.529Z","url":"/products"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:10:08.389Z","url":"/products"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:10:08.924Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T07:52:55.299Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T08:09:59.122Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T08:32:18.323Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T09:09:34.822Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T11:29:34.654Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T11:45:28.174Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T11:54:18.850Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T12:03:11.429Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T12:29:35.244Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T13:01:08.059Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T13:08:43.353Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T13:33:13.848Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":304,"timestamp":"2026-06-11T13:54:56.079Z","url":"/categories"}
+{"durationMs":3,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.203Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.251Z","url":"/categories/summary"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T14:07:28.806Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T14:07:28.811Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:23:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:37:24)","timestamp":"2026-06-11T14:07:28.853Z"}
+{"durationMs":80,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T14:07:28.895Z","url":"/categories/99"}
+{"durationMs":0,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T14:07:28.900Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:31:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:47:7)","timestamp":"2026-06-11T14:07:28.904Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T14:07:28.905Z","url":"/categories/99"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.914Z","url":"/products?page=1&pageSize=10"}
+{"durationMs":0,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.918Z","url":"/products?search=cola&categoryId=1&code=P001&sortBy=name&sortOrder=asc"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.922Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:15:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:33:23)","timestamp":"2026-06-11T14:07:28.928Z"}
+{"durationMs":5,"level":"info","message":"Request","method":"GET","status":404,"timestamp":"2026-06-11T14:07:28.930Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T14:07:28.935Z","url":"/products"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T14:07:28.939Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:27:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:52:23)","timestamp":"2026-06-11T14:07:28.943Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T14:07:28.944Z","url":"/products/99"}
+{"durationMs":0,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T14:07:28.947Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:35:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:62:7)","timestamp":"2026-06-11T14:07:28.950Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T14:07:28.951Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T14:07:28.955Z","url":"/inventory/1/increase"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:18:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:11:22)","timestamp":"2026-06-11T14:07:28.960Z"}
+{"durationMs":4,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T14:07:28.962Z","url":"/inventory/99/increase"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T14:07:28.966Z","url":"/inventory/1/decrease"}
+{"level":"warn","message":"Validation failure Stock cannot be negative","timestamp":"2026-06-11T14:07:28.969Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":400,"timestamp":"2026-06-11T14:07:28.970Z","url":"/inventory/1/decrease"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:37:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:21:22)","timestamp":"2026-06-11T14:07:28.973Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T14:07:28.975Z","url":"/inventory/99/decrease"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.979Z","url":"/history"}
+{"durationMs":0,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:07:28.982Z","url":"/history/1"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.759Z","url":"/categories"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.781Z","url":"/categories/summary"}
+{"durationMs":0,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T14:11:44.801Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T14:11:44.807Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:23:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:37:24)","timestamp":"2026-06-11T14:11:44.816Z"}
+{"durationMs":10,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T14:11:44.821Z","url":"/categories/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T14:11:44.827Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:31:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:47:7)","timestamp":"2026-06-11T14:11:44.832Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T14:11:44.833Z","url":"/categories/99"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.839Z","url":"/products?page=1&pageSize=10"}
+{"durationMs":0,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.843Z","url":"/products?search=cola&categoryId=1&code=P001&sortBy=name&sortOrder=asc"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.848Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:15:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:33:23)","timestamp":"2026-06-11T14:11:44.854Z"}
+{"durationMs":6,"level":"info","message":"Request","method":"GET","status":404,"timestamp":"2026-06-11T14:11:44.857Z","url":"/products/99"}
+{"durationMs":0,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T14:11:44.861Z","url":"/products"}
+{"durationMs":0,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T14:11:44.865Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:27:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:52:23)","timestamp":"2026-06-11T14:11:44.869Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T14:11:44.870Z","url":"/products/99"}
+{"durationMs":0,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T14:11:44.876Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:35:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:62:7)","timestamp":"2026-06-11T14:11:44.879Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T14:11:44.880Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T14:11:44.884Z","url":"/inventory/1/increase"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:18:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:11:22)","timestamp":"2026-06-11T14:11:44.889Z"}
+{"durationMs":4,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T14:11:44.891Z","url":"/inventory/99/increase"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T14:11:44.895Z","url":"/inventory/1/decrease"}
+{"level":"warn","message":"Validation failure Stock cannot be negative","timestamp":"2026-06-11T14:11:44.898Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":400,"timestamp":"2026-06-11T14:11:44.899Z","url":"/inventory/1/decrease"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:37:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:21:22)","timestamp":"2026-06-11T14:11:44.903Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T14:11:44.904Z","url":"/inventory/99/decrease"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.909Z","url":"/history"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:11:44.913Z","url":"/history/1"}
+{"durationMs":4,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.219Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.239Z","url":"/categories/summary"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T14:13:09.261Z","url":"/categories"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T14:13:09.267Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:23:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:37:24)","timestamp":"2026-06-11T14:13:09.280Z"}
+{"durationMs":15,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T14:13:09.287Z","url":"/categories/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T14:13:09.295Z","url":"/categories/1"}
+{"level":"error","message":"Category with id 99 not found","stack":"AppError: Category with id 99 not found\n    at CategoryService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.service.ts:31:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at CategoryController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\categories\\category.controller.ts:47:7)","timestamp":"2026-06-11T14:13:09.301Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T14:13:09.302Z","url":"/categories/99"}
+{"durationMs":2,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.310Z","url":"/products?page=1&pageSize=10"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.317Z","url":"/products?search=cola&categoryId=1&code=P001&sortBy=name&sortOrder=asc"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.322Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:15:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.getById (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:33:23)","timestamp":"2026-06-11T14:13:09.330Z"}
+{"durationMs":6,"level":"info","message":"Request","method":"GET","status":404,"timestamp":"2026-06-11T14:13:09.332Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":201,"timestamp":"2026-06-11T14:13:09.339Z","url":"/products"}
+{"durationMs":1,"level":"info","message":"Request","method":"PUT","status":200,"timestamp":"2026-06-11T14:13:09.347Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:27:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.update (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:52:23)","timestamp":"2026-06-11T14:13:09.352Z"}
+{"durationMs":2,"level":"info","message":"Request","method":"PUT","status":404,"timestamp":"2026-06-11T14:13:09.354Z","url":"/products/99"}
+{"durationMs":0,"level":"info","message":"Request","method":"DELETE","status":204,"timestamp":"2026-06-11T14:13:09.360Z","url":"/products/1"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at ProductService.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.service.ts:35:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at ProductController.delete (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\products\\product.controller.ts:62:7)","timestamp":"2026-06-11T14:13:09.365Z"}
+{"durationMs":4,"level":"info","message":"Request","method":"DELETE","status":404,"timestamp":"2026-06-11T14:13:09.368Z","url":"/products/99"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T14:13:09.374Z","url":"/inventory/1/increase"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:18:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.increaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:11:22)","timestamp":"2026-06-11T14:13:09.381Z"}
+{"durationMs":4,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T14:13:09.383Z","url":"/inventory/99/increase"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":200,"timestamp":"2026-06-11T14:13:09.388Z","url":"/inventory/1/decrease"}
+{"level":"warn","message":"Validation failure Stock cannot be negative","timestamp":"2026-06-11T14:13:09.393Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":400,"timestamp":"2026-06-11T14:13:09.394Z","url":"/inventory/1/decrease"}
+{"level":"error","message":"Product with id 99 not found","stack":"AppError: Product with id 99 not found\n    at InventoryService.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.service.ts:37:13)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at InventoryController.decreaseStock (C:\\Users\\DraganaSavanovic\\source\\repos\\e1-course\\warehouse-inventory-system\\backend\\src\\inventory\\inventory.controller.ts:21:22)","timestamp":"2026-06-11T14:13:09.398Z"}
+{"durationMs":1,"level":"info","message":"Request","method":"POST","status":404,"timestamp":"2026-06-11T14:13:09.399Z","url":"/inventory/99/decrease"}
+{"durationMs":0,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.403Z","url":"/history"}
+{"durationMs":1,"level":"info","message":"Request","method":"GET","status":200,"timestamp":"2026-06-11T14:13:09.408Z","url":"/history/1"}

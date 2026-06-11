@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   quantity: number;
   categoryId: number;
-  category: { id: number; name: string };
+  category?: { id: number; name: string };
 }
 
 export interface ProductPayload {
@@ -14,4 +14,24 @@ export interface ProductPayload {
   price: number;
   quantity: number;
   categoryId: number;
+}
+
+export type SortField = 'name' | 'quantity';
+export type SortOrder = 'asc' | 'desc';
+
+export interface ProductQuery {
+  search?: string;
+  categoryId?: number;
+  code?: string;
+  sortBy?: SortField;
+  sortOrder?: SortOrder;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface ProductListResponse {
+  data: Product[];
+  total: number;
+  page: number;
+  pageSize: number;
 }

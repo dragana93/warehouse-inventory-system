@@ -57,7 +57,7 @@ export class InventoryUpdateComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe((products) => this.products.set(products));
+    this.productService.getAll().subscribe((response) => this.products.set(response.data));
 
     // Re-validate quantity when action or product changes
     this.form.controls.action.valueChanges.subscribe(() =>

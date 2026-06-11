@@ -5,6 +5,7 @@ export interface Product {
   price: number;
   quantity: number;
   categoryId: number;
+  category?: { id: number; name: string };
 }
 
 export type SortField = 'name' | 'quantity';

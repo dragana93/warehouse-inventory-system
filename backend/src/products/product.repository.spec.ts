@@ -22,7 +22,7 @@ describe('ProductRepository', () => {
 
       expect(result).toEqual({ data: [product], total: 1, page: 1, pageSize: 10 });
       expect(prisma.product.findMany).toHaveBeenCalledWith(
-        expect.objectContaining({ skip: 0, take: 10 })
+        expect.objectContaining({ skip: 0, take: 10, include: { category: true } })
       );
     });
 
@@ -71,7 +71,7 @@ describe('ProductRepository', () => {
       const result = await repository.findById(1);
 
       expect(result).toEqual(product);
-      expect(prisma.product.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
+      expect(prisma.product.findUnique).toHaveBeenCalledWith({ where: { id: 1 }, include: { category: true } });
     });
 
     it('returns null when not found', async () => {

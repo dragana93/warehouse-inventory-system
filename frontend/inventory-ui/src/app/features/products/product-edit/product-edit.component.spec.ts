@@ -7,7 +7,7 @@ import { ProductEditComponent } from './product-edit.component';
 import { ProductService } from '../product.service';
 import { CategoryService } from '../../categories/category.service';
 import { ProductFormValue } from '../product-form/product-form.component';
-import { Product } from '../../../models/product.model';
+import { Product, ProductListResponse } from '../../../models/product.model';
 
 const mockProduct: Product = {
   id: 42,
@@ -26,9 +26,11 @@ function createRouteMock(id: string) {
 }
 
 async function setup(product: Product = mockProduct, routeId = '42') {
+  const mockListResponse: ProductListResponse = { data: [product], total: 1, page: 1, pageSize: 10 };
   const mockProductService = {
     getById: vi.fn().mockReturnValue(of(product)),
     update: vi.fn().mockReturnValue(of(product)),
+    getAll: vi.fn().mockReturnValue(of(mockListResponse)),
   };
   const mockCategoryService = { getAll: vi.fn().mockReturnValue(of([])) };
 

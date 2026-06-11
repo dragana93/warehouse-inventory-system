@@ -4,8 +4,7 @@ import { of, throwError } from 'rxjs';
 import { InventoryUpdateComponent } from './inventory-update.component';
 import { InventoryService } from '../inventory.service';
 import { ProductService } from '../../products/product.service';
-import { Product } from '../../../models/product.model';
-import { StockUpdateResult } from '../../../models/inventory.model';
+import { Product, ProductListResponse } from '../../../models/product.model';
 
 const mockProducts: Product[] = [
   {
@@ -18,12 +17,17 @@ const mockProducts: Product[] = [
   },
 ];
 
-const mockStockResult: StockUpdateResult = { id: 1, quantity: 60 };
+const mockListResponse: ProductListResponse = {
+  data: mockProducts,
+  total: mockProducts.length,
+  page: 1,
+  pageSize: 10,
+};
 
 async function setup() {
-  const mockProductService = { getAll: vi.fn().mockReturnValue(of(mockProducts)) };
+  const mockProductService = { getAll: vi.fn().mockReturnValue(of(mockListResponse)) };
   const mockInventoryService = {
-    increase: vi.fn().mockReturnValue(of(mockStockResult)),
+    increase: vi.fn().mockReturnValue(of({ id: 1, quantity: 60 })),
     decrease: vi.fn().mockReturnValue(of({ id: 1, quantity: 45 })),
   };
 
@@ -179,7 +183,7 @@ describe('InventoryUpdateComponent', () => {
 
   describe('submit() — server error', () => {
     it('should set serverError signal when service returns error', async () => {
-      const mockProductService = { getAll: vi.fn().mockReturnValue(of(mockProducts)) };
+      const mockProductService = { getAll: vi.fn().mockReturnValue(of(mockListResponse)) };
       const mockInventoryService = {
         increase: vi.fn().mockReturnValue(
           throwError(() => ({ error: { message: 'Stock update failed' } })),
@@ -214,6 +218,7 @@ describe('InventoryUpdateComponent', () => {
     it('should clear result and reset form', async () => {
       const { component } = await setup();
       component.form.controls.productId.setValue(1);
+      component.form.controls.action.setValue('increase');
       component.form.controls.quantity.setValue(10);
       component.submit();
 

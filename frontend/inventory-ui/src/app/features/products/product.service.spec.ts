@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ProductService } from './product.service';
-import { Product, ProductPayload } from '../../models/product.model';
+import { Product, ProductListResponse, ProductPayload } from '../../models/product.model';
 
 const BASE_URL = 'http://localhost:3000/products';
 
@@ -14,6 +14,13 @@ const mockProduct: Product = {
   quantity: 100,
   categoryId: 1,
   category: { id: 1, name: 'Electronics' },
+};
+
+const mockListResponse: ProductListResponse = {
+  data: [mockProduct],
+  total: 1,
+  page: 1,
+  pageSize: 10,
 };
 
 describe('ProductService', () => {
@@ -35,14 +42,42 @@ describe('ProductService', () => {
   });
 
   describe('getAll', () => {
-    it('should GET all products', () => {
-      const mock: Product[] = [mockProduct];
-
-      service.getAll().subscribe((result) => expect(result).toEqual(mock));
+    it('should GET all products and return ProductListResponse', () => {
+      service.getAll().subscribe((result) => expect(result).toEqual(mockListResponse));
 
       const req = httpMock.expectOne(BASE_URL);
       expect(req.request.method).toBe('GET');
-      req.flush(mock);
+      req.flush(mockListResponse);
+    });
+
+    it('should include search param when provided', () => {
+      service.getAll({ search: 'widget' }).subscribe();
+      const req = httpMock.expectOne((r) => r.url === BASE_URL);
+      expect(req.request.params.get('search')).toBe('widget');
+      req.flush(mockListResponse);
+    });
+
+    it('should include categoryId param when provided', () => {
+      service.getAll({ categoryId: 2 }).subscribe();
+      const req = httpMock.expectOne((r) => r.url === BASE_URL);
+      expect(req.request.params.get('categoryId')).toBe('2');
+      req.flush(mockListResponse);
+    });
+
+    it('should include sortBy and sortOrder params when provided', () => {
+      service.getAll({ sortBy: 'name', sortOrder: 'desc' }).subscribe();
+      const req = httpMock.expectOne((r) => r.url === BASE_URL);
+      expect(req.request.params.get('sortBy')).toBe('name');
+      expect(req.request.params.get('sortOrder')).toBe('desc');
+      req.flush(mockListResponse);
+    });
+
+    it('should include page and pageSize params when provided', () => {
+      service.getAll({ page: 2, pageSize: 20 }).subscribe();
+      const req = httpMock.expectOne((r) => r.url === BASE_URL);
+      expect(req.request.params.get('page')).toBe('2');
+      expect(req.request.params.get('pageSize')).toBe('20');
+      req.flush(mockListResponse);
     });
   });
 

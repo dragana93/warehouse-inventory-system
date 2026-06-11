@@ -1,15 +1,23 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Product, ProductPayload } from '../../models/product.model';
+import { Product, ProductListResponse, ProductPayload, ProductQuery } from '../../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = 'http://localhost:3000/products';
 
-  getAll(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseUrl);
+  getAll(query: ProductQuery = {}): Observable<ProductListResponse> {
+    let params = new HttpParams();
+    if (query.search) params = params.set('search', query.search);
+    if (query.categoryId != null) params = params.set('categoryId', String(query.categoryId));
+    if (query.code) params = params.set('code', query.code);
+    if (query.sortBy) params = params.set('sortBy', query.sortBy);
+    if (query.sortOrder) params = params.set('sortOrder', query.sortOrder);
+    if (query.page != null) params = params.set('page', String(query.page));
+    if (query.pageSize != null) params = params.set('pageSize', String(query.pageSize));
+    return this.http.get<ProductListResponse>(this.baseUrl, { params });
   }
 
   getById(id: number): Observable<Product> {

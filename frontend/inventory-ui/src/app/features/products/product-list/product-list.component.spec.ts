@@ -4,7 +4,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ProductListComponent } from './product-list.component';
 import { ProductService } from '../product.service';
-import { Product } from '../../../models/product.model';
+import { Product, ProductListResponse } from '../../../models/product.model';
 
 const mockProducts: Product[] = [
   {
@@ -36,8 +36,12 @@ const mockProducts: Product[] = [
   },
 ];
 
+function makeResponse(products: Product[]): ProductListResponse {
+  return { data: products, total: products.length, page: 1, pageSize: 10 };
+}
+
 async function createComponent(products: Product[] = mockProducts) {
-  const mockService = { getAll: vi.fn().mockReturnValue(of(products)) };
+  const mockService = { getAll: vi.fn().mockReturnValue(of(makeResponse(products))) };
 
   await TestBed.configureTestingModule({
     imports: [ProductListComponent],
@@ -136,7 +140,7 @@ describe('ProductListComponent', () => {
       component.categoryFilter.set('Electronics');
       const results = component.filteredProducts();
       expect(results.length).toBe(2);
-      expect(results.every((p) => p.category.name === 'Electronics')).toBe(true);
+      expect(results.every((p) => p.category?.name === 'Electronics')).toBe(true);
     });
 
     it('should show all when categoryFilter is empty', async () => {

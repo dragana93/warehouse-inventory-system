@@ -8,13 +8,65 @@
 }
 
 .app-sidenav {
-  width: 240px;
+  width: 252px;
+  background: #1e2a38;
+  border-right: none;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
 }
 
-.content {
-  padding: 16px;
+.sidenav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 20px 16px;
+
+  .brand-icon {
+    color: #60a5fa;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #ffffff;
+  }
+}
+
+.nav-list {
+  padding: 8px 0;
+}
+
+.nav-item {
+  margin: 2px 8px;
+  border-radius: 8px;
 }
 
 .active-link {
-  background-color: var(--mat-sys-surface-variant);
+  background: rgba(96, 165, 250, 0.18) !important;
+}
+
+.app-toolbar {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.toolbar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: 0.01em;
+}
+
+.content {
+  padding: 0;
+  background: #f4f6f9;
+  min-height: calc(100vh - 64px);
 }

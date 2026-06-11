@@ -5,12 +5,20 @@
     [opened]="!isMobile()"
     class="app-sidenav"
   >
-    <mat-nav-list>
+    <div class="sidenav-brand">
+      <mat-icon class="brand-icon">warehouse</mat-icon>
+      <span class="brand-name">WareTrack</span>
+    </div>
+
+    <mat-divider />
+
+    <mat-nav-list class="nav-list">
       @for (item of navItems; track item.path) {
         <a
           mat-list-item
           [routerLink]="item.path"
           routerLinkActive="active-link"
+          class="nav-item"
         >
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
@@ -20,7 +28,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar class="app-toolbar">
       @if (isMobile()) {
         <button
           mat-icon-button
@@ -30,7 +38,7 @@
           <mat-icon>menu</mat-icon>
         </button>
       }
-      <span>Warehouse Inventory System</span>
+      <span class="toolbar-title">Warehouse Inventory System</span>
     </mat-toolbar>
 
     <main class="content">
