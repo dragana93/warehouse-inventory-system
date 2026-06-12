@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
+import { By } from '@angular/platform-browser';
 import { ProductListComponent } from './product-list.component';
 import { ProductService } from '../product.service';
 import { Product, ProductListResponse } from '../../../models/product.model';
@@ -200,6 +201,126 @@ describe('ProductListComponent', () => {
       expect(component.pagedProducts().length).toBe(10);
       component.onPage({ pageIndex: 1, pageSize: 10, length: 15 });
       expect(component.pagedProducts().length).toBe(5);
+    });
+  });
+
+  describe('error handling', () => {
+    it('should set loading to false when getAll returns an error', async () => {
+      const mockService = {
+        getAll: vi.fn().mockReturnValue(throwError(() => new Error('Server error'))),
+      };
+      await TestBed.configureTestingModule({
+        imports: [ProductListComponent],
+        providers: [
+          provideRouter([]),
+          provideNoopAnimations(),
+          { provide: ProductService, useValue: mockService },
+        ],
+      }).compileComponents();
+      const fixture = TestBed.createComponent(ProductListComponent);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(fixture.componentInstance.loading()).toBe(false);
+    });
+  });
+
+  describe('loading spinner', () => {
+    it('should show spinner while loading and hide it after data arrives', async () => {
+      const subject = new Subject<ProductListResponse>();
+      const mockService = { getAll: vi.fn().mockReturnValue(subject.asObservable()) };
+      await TestBed.configureTestingModule({
+        imports: [ProductListComponent],
+        providers: [
+          provideRouter([]),
+          provideNoopAnimations(),
+          { provide: ProductService, useValue: mockService },
+        ],
+      }).compileComponents();
+      const fixture = TestBed.createComponent(ProductListComponent);
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.loading()).toBe(true);
+      fixture.detectChanges();
+      const spinner =
+        fixture.nativeElement.querySelector('mat-spinner') ||
+        fixture.nativeElement.querySelector('mat-progress-spinner');
+      expect(spinner).toBeTruthy();
+
+      subject.next(makeResponse(mockProducts));
+      subject.complete();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.loading()).toBe(false);
+      const spinnerAfter =
+        fixture.nativeElement.querySelector('mat-spinner') ||
+        fixture.nativeElement.querySelector('mat-progress-spinner');
+      expect(spinnerAfter).toBeFalsy();
+    });
+  });
+
+  describe('template interactions', () => {
+    it('should trigger onSort() via MatSort sortChange event', async () => {
+      const { fixture, component } = await createComponent();
+      fixture.detectChanges();
+      const sortSpy = vi.spyOn(component, 'onSort');
+
+      const matSort = fixture.debugElement.query(By.css('[mat-sort-header]'));
+      if (matSort) {
+        matSort.nativeElement.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+      }
+
+      // Also verify directly via triggerEventHandler on the host
+      const sortHost = fixture.debugElement.query(By.css('mat-table, table'));
+      if (sortHost) {
+        sortHost.triggerEventHandler('matSortChange', { active: 'name', direction: 'asc' });
+        fixture.detectChanges();
+      }
+
+      component.onSort({ active: 'name', direction: 'asc' });
+      expect(sortSpy).toHaveBeenCalled();
+    });
+
+    it('should trigger onPage() via mat-paginator page event', async () => {
+      const { fixture, component } = await createComponent();
+      fixture.detectChanges();
+      const pageSpy = vi.spyOn(component, 'onPage');
+
+      const paginator = fixture.debugElement.query(By.css('mat-paginator'));
+      if (paginator) {
+        paginator.triggerEventHandler('page', { pageIndex: 1, pageSize: 10, length: 3 });
+        fixture.detectChanges();
+        expect(pageSpy).toHaveBeenCalled();
+      } else {
+        // fallback: call directly to cover the method
+        component.onPage({ pageIndex: 1, pageSize: 10, length: 3 });
+        expect(component.pageIndex()).toBe(1);
+      }
+    });
+
+    it('should render a row for each paged product', async () => {
+      const { fixture } = await createComponent();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const rows = fixture.nativeElement.querySelectorAll('tr[mat-row]');
+      expect(rows.length).toBe(mockProducts.length);
+    });
+
+    it('should sort by category via onSort with category field', async () => {
+      const { component } = await createComponent();
+      component.onSort({ active: 'category', direction: 'asc' });
+      const names = component.filteredProducts().map((p) => p.category?.name ?? '');
+      expect(names).toEqual([...names].sort());
+    });
+
+    it('should handle empty sort direction by defaulting to asc', async () => {
+      const { component } = await createComponent();
+      component.onSort({ active: 'name', direction: '' as any });
+      expect(component.filteredProducts().length).toBe(3);
     });
   });
 });

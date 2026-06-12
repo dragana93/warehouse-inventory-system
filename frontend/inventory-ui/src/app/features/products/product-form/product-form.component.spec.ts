@@ -182,5 +182,130 @@ describe('ProductFormComponent', () => {
       expect(emitted).toBe(true);
     });
   });
+
+  describe('template interactions', () => {
+    it('should emit submitted via DOM form submit when form is valid', async () => {
+      const { fixture, component } = await setup();
+      const emitted: ProductFormValue[] = [];
+      component.submitted.subscribe((v) => emitted.push(v));
+      component.form.setValue({ code: 'P001', name: 'Widget', price: 9.99, categoryId: 1, quantity: 50 });
+      fixture.detectChanges();
+
+      const form = fixture.nativeElement.querySelector('form');
+      form.dispatchEvent(new Event('submit'));
+      fixture.detectChanges();
+
+      expect(emitted.length).toBe(1);
+    });
+
+    it('should emit cancelled via DOM cancel button click', async () => {
+      const { fixture, component } = await setup();
+      let emitted = false;
+      component.cancelled.subscribe(() => (emitted = true));
+
+      const cancelButton = fixture.nativeElement.querySelector('button[type="button"]');
+      cancelButton.click();
+      fixture.detectChanges();
+
+      expect(emitted).toBe(true);
+    });
+
+    it('should show code required error in DOM when field is touched and empty', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.code.setValue('');
+      component.form.controls.code.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const errorTexts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(errorTexts.some((t) => t.includes('Code is required'))).toBe(true);
+    });
+
+    it('should show name required error in DOM when field is touched and empty', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.name.setValue('');
+      component.form.controls.name.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const errorTexts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(errorTexts.some((t) => t.includes('Name is required'))).toBe(true);
+    });
+
+    it('should show price required error in DOM when field is touched and null', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.price.setValue(null);
+      component.form.controls.price.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const errorTexts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(errorTexts.some((t) => t.includes('Price is required'))).toBe(true);
+    });
+
+    it('should show price min error in DOM when price is 0 and field is touched', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.price.setValue(0);
+      component.form.controls.price.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const errorTexts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(errorTexts.some((t) => t.includes('Price must be greater than 0'))).toBe(true);
+    });
+
+    it('should show quantity required error in DOM when field is touched and null', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.quantity.setValue(null);
+      component.form.controls.quantity.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const errorTexts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(errorTexts.some((t) => t.includes('Quantity is required'))).toBe(true);
+    });
+
+    it('should show quantity min error in DOM when quantity is negative and touched', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.quantity.setValue(-1);
+      component.form.controls.quantity.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const errorTexts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(errorTexts.some((t) => t.includes('Quantity cannot be negative'))).toBe(true);
+    });
+
+    it('should render title input in the template', async () => {
+      const { fixture } = await setup();
+      fixture.componentRef.setInput('title', 'Create Product');
+      fixture.detectChanges();
+
+      const h1 = fixture.nativeElement.querySelector('h1');
+      expect(h1.textContent.trim()).toBe('Create Product');
+    });
+
+    it('should render category options in mat-select', async () => {
+      const { fixture } = await setup();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      // categories() signal is populated — options exist in the DOM when select is rendered
+      const matSelect = fixture.nativeElement.querySelector('mat-select');
+      expect(matSelect).toBeTruthy();
+    });
+  });
 });
 

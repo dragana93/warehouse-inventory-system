@@ -48,4 +48,45 @@ describe('ConfirmDeleteDialogComponent', () => {
     const { fixture } = await setup();
     expect(fixture.componentInstance.data).toEqual({ name: 'Electronics' });
   });
+
+  it('should close with false when Cancel button is clicked in the DOM', async () => {
+    const { fixture, dialogRefMock } = await setup();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    const cancelButton = Array.from(buttons).find((b: any) =>
+      b.textContent.trim() === 'Cancel',
+    ) as HTMLButtonElement;
+
+    expect(cancelButton).toBeTruthy();
+    cancelButton.click();
+    fixture.detectChanges();
+
+    expect(dialogRefMock.close).toHaveBeenCalledWith(false);
+  });
+
+  it('should close with true when Delete button is clicked in the DOM', async () => {
+    const { fixture, dialogRefMock } = await setup();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('button');
+    const deleteButton = Array.from(buttons).find((b: any) =>
+      b.textContent.trim() === 'Delete',
+    ) as HTMLButtonElement;
+
+    expect(deleteButton).toBeTruthy();
+    deleteButton.click();
+    fixture.detectChanges();
+
+    expect(dialogRefMock.close).toHaveBeenCalledWith(true);
+  });
+
+  it('should display the static warning text about the action being irreversible', async () => {
+    const { fixture } = await setup();
+    await fixture.whenStable();
+    const content = fixture.nativeElement as HTMLElement;
+    expect(content.textContent).toContain('This action cannot be undone');
+  });
 });

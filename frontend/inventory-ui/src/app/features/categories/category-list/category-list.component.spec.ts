@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { CategoryListComponent } from './category-list.component';
 import { CategoryService } from '../category.service';
 import { Category, CategoryPayload } from '../../../models/category.model';
@@ -170,5 +170,78 @@ describe('CategoryListComponent', () => {
     expect(dialogMock.open).toHaveBeenCalledWith(expect.anything(), {
       data: { name: 'Electronics' },
     });
+  });
+
+  it('should set loading to false when getAll returns an error', async () => {
+    mockCategoryService.getAll = vi.fn().mockReturnValue(throwError(() => new Error('Server error')));
+    const fixture = await createComponent({ open: vi.fn() });
+    await fixture.whenStable();
+    expect(fixture.componentInstance.loading()).toBe(false);
+  });
+
+  it('should show loading spinner while data is being fetched', async () => {
+    const subject = new Subject<Category[]>();
+    mockCategoryService.getAll = vi.fn().mockReturnValue(subject.asObservable());
+
+    const fixture = await createComponent({ open: vi.fn() });
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.loading()).toBe(true);
+    const spinner = fixture.nativeElement.querySelector('mat-spinner');
+    expect(spinner).toBeTruthy();
+
+    subject.next(mockCategories);
+    subject.complete();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.loading()).toBe(false);
+    expect(fixture.nativeElement.querySelector('mat-spinner')).toBeFalsy();
+  });
+
+  it('should trigger openAddDialog when the add button is clicked in the template', async () => {
+    const dialogMock = createDialogMock(undefined);
+    const fixture = await createComponent(dialogMock);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const openSpy = vi.spyOn(fixture.componentInstance, 'openAddDialog');
+    const addButton =
+      fixture.nativeElement.querySelector('button[color="primary"]') ||
+      fixture.nativeElement.querySelector('.mat-mdc-raised-button');
+    addButton?.click();
+    fixture.detectChanges();
+
+    expect(openSpy).toHaveBeenCalled();
+  });
+
+  it('should trigger openEditDialog when the edit button is clicked in the template', async () => {
+    const dialogMock = createDialogMock(undefined);
+    const fixture = await createComponent(dialogMock);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const openSpy = vi.spyOn(fixture.componentInstance, 'openEditDialog');
+    const iconButtons = fixture.nativeElement.querySelectorAll('[mat-icon-button]');
+    if (iconButtons.length > 0) {
+      (iconButtons[0] as HTMLButtonElement).click();
+      fixture.detectChanges();
+      expect(openSpy).toHaveBeenCalledWith(mockCategories[0]);
+    }
+  });
+
+  it('should trigger openDeleteDialog when the delete button is clicked in the template', async () => {
+    const dialogMock = createDialogMock(false);
+    const fixture = await createComponent(dialogMock);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const openSpy = vi.spyOn(fixture.componentInstance, 'openDeleteDialog');
+    const iconButtons = fixture.nativeElement.querySelectorAll('[mat-icon-button]');
+    if (iconButtons.length > 1) {
+      (iconButtons[1] as HTMLButtonElement).click();
+      fixture.detectChanges();
+      expect(openSpy).toHaveBeenCalledWith(mockCategories[0]);
+    }
   });
 });

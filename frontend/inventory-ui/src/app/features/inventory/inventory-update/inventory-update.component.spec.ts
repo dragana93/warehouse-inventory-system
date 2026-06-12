@@ -229,4 +229,158 @@ describe('InventoryUpdateComponent', () => {
       expect(component.form.controls.productId.value).toBeNull();
     });
   });
+
+  describe('template interactions', () => {
+    it('should trigger submit() via DOM form submit event', async () => {
+      const { fixture, component } = await setup();
+      const submitSpy = vi.spyOn(component, 'submit');
+      const form = fixture.nativeElement.querySelector('form');
+      form.dispatchEvent(new Event('submit'));
+      fixture.detectChanges();
+      expect(submitSpy).toHaveBeenCalled();
+    });
+
+    it('should render success banner in DOM after successful submit', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.productId.setValue(1);
+      component.form.controls.action.setValue('increase');
+      component.form.controls.quantity.setValue(10);
+      component.submit();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const banner = fixture.nativeElement.querySelector('.success-banner');
+      expect(banner).toBeTruthy();
+      expect(banner.textContent).toContain('50');
+      expect(banner.textContent).toContain('60');
+    });
+
+    it('should call reset() via DOM "Update another" button click in success banner', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.productId.setValue(1);
+      component.form.controls.action.setValue('increase');
+      component.form.controls.quantity.setValue(10);
+      component.submit();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const resetSpy = vi.spyOn(component, 'reset');
+      const resetBtn = fixture.nativeElement.querySelector('.success-banner button');
+      resetBtn.click();
+      fixture.detectChanges();
+
+      expect(resetSpy).toHaveBeenCalled();
+      expect(component.result()).toBeNull();
+    });
+
+    it('should show product required error in DOM when productId is touched and empty', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.productId.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const texts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(texts.some((t) => t.includes('Product is required'))).toBe(true);
+    });
+
+    it('should show quantity required error in DOM when quantity is touched and null', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.quantity.setValue(null);
+      component.form.controls.quantity.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const texts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(texts.some((t) => t.includes('Quantity is required'))).toBe(true);
+    });
+
+    it('should show quantity min error in DOM when quantity is 0 and touched', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.quantity.setValue(0);
+      component.form.controls.quantity.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const texts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(texts.some((t) => t.includes('Quantity must be at least 1'))).toBe(true);
+    });
+
+    it('should show exceedsStock error in DOM after attempting to decrease more than stock', async () => {
+      const { fixture, component } = await setup();
+      component.form.controls.productId.setValue(2); // quantity = 10
+      component.form.controls.action.setValue('decrease');
+      component.form.controls.quantity.setValue(20);
+      component.submit();
+      component.form.controls.quantity.markAsTouched();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const errors = fixture.nativeElement.querySelectorAll('mat-error');
+      const texts = Array.from(errors).map((e: any) => e.textContent.trim());
+      expect(texts.some((t) => t.includes('Available stock'))).toBe(true);
+    });
+
+    it('should show server error paragraph in DOM when serverError signal is set', async () => {
+      const { fixture, component } = await setup();
+      component.serverError.set('Something went wrong');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const el = fixture.nativeElement.querySelector('.server-error');
+      expect(el).toBeTruthy();
+      expect(el.textContent.trim()).toBe('Something went wrong');
+    });
+  });
+
+  describe('branch coverage — ?? fallbacks', () => {
+    it('should use 0 as current stock when selectedProduct() is null (productId not found)', async () => {
+      const { component, mockInventoryService } = await setup();
+      // productId 999 does not exist in mockProducts — selectedProduct() returns null
+      component.form.controls.productId.setValue(999);
+      component.form.controls.action.setValue('increase');
+      component.form.controls.quantity.setValue(5);
+      component.submit();
+      // current = null?.quantity ?? 0 === 0; increase proceeds normally
+      expect(mockInventoryService.increase).toHaveBeenCalledWith(999, 5);
+    });
+
+    it('should use fallback error message when error object has no message property', async () => {
+      const mockProductServiceLocal = { getAll: vi.fn().mockReturnValue(of(mockListResponse)) };
+      const mockInventoryServiceLocal = {
+        increase: vi.fn().mockReturnValue(throwError(() => ({}))),
+        decrease: vi.fn().mockReturnValue(of({})),
+      };
+
+      await TestBed.configureTestingModule({
+        imports: [InventoryUpdateComponent],
+        providers: [
+          provideNoopAnimations(),
+          { provide: ProductService, useValue: mockProductServiceLocal },
+          { provide: InventoryService, useValue: mockInventoryServiceLocal },
+        ],
+      }).compileComponents();
+
+      const fixture = TestBed.createComponent(InventoryUpdateComponent);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      const component = fixture.componentInstance;
+
+      component.form.controls.productId.setValue(1);
+      component.form.controls.action.setValue('increase');
+      component.form.controls.quantity.setValue(10);
+      component.submit();
+
+      expect(component.serverError()).toBe('An error occurred. Please try again.');
+    });
+  });
 });
